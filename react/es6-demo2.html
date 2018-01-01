@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/browser.min.js"></script>
+		<script src="js/react.js"></script>
+    	<script src="js/react-dom.js"></script>
+		<script src="js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/babel">
+			/*var names = ['Alice','Emily','Kate'];
+			ReactDOM.render(
+				<div>
+					{names.map(function(name){
+						return <div>
+							Hello,{name}
+						</div>
+					})
+				}
+				</div>,
+				document.getElementById("example")
+			);*/
+			class Arrs extends React.Component{
+				constructor(...args) {
+				  super(...args);
+				  this.state = {
+				    names : ['Alice','Emily','Kate'],
+				    notice : '注意赋值为冒号，及后面的逗号；render的取值方式'
+			     }
+				}
+				render(){
+					return <div>
+						{
+							this.state.names.map(function(name){
+								return (<div>
+									Hello,{name}
+								</div>);
+							})
+						}
+					</div>
+				}
+			}
+			
+			ReactDOM.render(
+				<Arrs />,
+				document.getElementById('example')
+			);
+		</script>
+	</body>
+</html>

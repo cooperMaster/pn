@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/browser.min.js"></script>
+		<script src="js/react.js"></script>
+    	<script src="js/react-dom.js"></script>
+		<script src="js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/babel">
+			class Hello extends React.Component{
+				render(){
+					return <div>
+						Hello,{this.props.name}
+					</div>
+				}
+			}
+			
+			ReactDOM.render(
+				<Hello name="Alice"/>,
+				document.getElementById("example")
+			);
+		</script>
+	</body>
+</html>

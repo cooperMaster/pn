@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/browser.min.js"></script>
+		<script src="js/react.js"></script>
+    	<script src="js/react-dom.js"></script>
+		<script src="js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/babel">
+			var LikedComponent = React.createClass({
+				getInitialState:function(){
+					return {liked:false,text:'haven\'t liked '};
+				},
+				handleClick:function(event){
+					if(!this.state.liked){
+						this.setState({
+							liked:true,text:'like '
+						});
+					}else{
+						this.setState({
+							liked:false,text:'haven\'t liked '
+						});
+					}
+				},
+				render:function(){
+					return <div>
+						<p onClick={this.handleClick}>You {this.state.text}this.Click to toggle</p>
+					</div>;
+				}
+			});
+			
+			ReactDOM.render(
+				<LikedComponent />,
+				document.getElementById("example")
+			);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/browser.min.js"></script>
+		<script src="js/react.js"></script>
+    	<script src="js/react-dom.js"></script>
+		<script src="js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/babel">
+			class ShowContent extends React.Component{
+				constructor(args){
+					super(args);
+					this.handleChange = this.handleChange.bind(this);
+					this.state = {
+						text : 'test state'
+					}
+				}
+				handleChange(event){
+					this.refs.mySpan.innerText = event.target.value;
+				}
+				render(){
+					return (<div>
+						<input onChange={this.handleChange} type="text"/>
+						<span ref="mySpan"></span>
+					</div>);
+				}
+			}
+						
+			ReactDOM.render(
+				<ShowContent />,
+				document.getElementById("example")
+			);
+		</script>
+	</body>
+</html>

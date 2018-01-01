@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/browser.min.js"></script>
+		<script src="js/react.js"></script>
+    	<script src="js/react-dom.js"></script>
+		<script src="js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/babel">
+			class UserGist extends React.Component{
+				constructor(args){
+					super(args);
+					this.state = {
+						userName :'',
+						lastGistUrl :''
+					}
+				}
+				componentDidMount(){
+					$.get(this.props.source,function(result){
+						let lastGist = result[0];
+						console.log(lastGist.owner.login)
+//						if(this.isMounted){es5的语法能用这个，没明白
+							this.setState({
+								userName : lastGist.owner.login,
+								lastGistUrl:lastGist.html_url
+							});
+//						}
+					}.bind(this));
+				}
+				render(){
+					return <div>
+						{this.state.userName}'s last gist is <a href={this.state.lastGistUrl}>here</a>
+					</div>
+				}
+			}
+			
+			ReactDOM.render(
+				<UserGist source="https://api.github.com/users/octocat/gists"/>,
+				document.getElementById("example")
+			);
+		</script>
+	</body>
+</html>

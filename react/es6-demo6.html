@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<script src="js/browser.min.js"></script>
+		<script src="js/react.js"></script>
+    	<script src="js/react-dom.js"></script>
+		<script src="js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="example">
+		</div>
+		<script type="text/babel">
+			class MyTitle extends React.Component{
+				proTypes(){
+					title : React.PropTypes.string.isRequired
+				}
+				render(){
+					return <div>
+						{this.props.title}
+					</div>;
+				}
+			}
+						
+			ReactDOM.render(
+				<MyTitle title={'123'}/>,
+				document.getElementById("example")
+			);
+		</script>
+	</body>
+</html>
