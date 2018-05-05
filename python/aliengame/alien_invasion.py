@@ -28,13 +28,14 @@ def run_game():
     while True:
         # 监视键盘和鼠标事件
         gf.check_events(ai_settings, screen, ship, bullets)
-        ship.update()
-        gf.update_bullets(aliens,bullets)
-        gf.update_aliens(ai_settings,ship,aliens)
-        if len(aliens) == 0:
-            # 删除现有的子弹并新建一群外星人
-            #bullets.empty()
-            gf.create_fleet(ai_settings, screen, ship, aliens)
+        if stats.game_active:
+            ship.update()
+            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
+            if len(aliens) == 0:
+                # 删除现有的子弹并新建一群外星人
+                #bullets.empty()
+                gf.create_fleet(ai_settings, screen, ship, aliens)
 
 
         # 每次循环时都重绘屏幕
