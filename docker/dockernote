@@ -1,0 +1,120 @@
+search: docker search xxxx(mysql)
+pull: docker pull xxxx
+查看容器启动情况:docker ps
+docker start :启动一个或多少已经被停止的容器
+docker stop :停止一个运行中的容器
+docker restart :重启容器
+语法:
+docker start [OPTIONS] CONTAINER [CONTAINER...]   (docker start mymysql --mymysql is container's name)
+docker stop [OPTIONS] CONTAINER [CONTAINER...]
+docker restart [OPTIONS] CONTAINER [CONTAINER...]
+
+删除容器：
+	docker rm xxx --删除前，容器要先stop
+	docker container prune --清理所有处于终止状态的容器
+
+docker mysql:
+-init:
+	docker run -p 3306:3306 --name mymysql -v $PWD/conf:/etc/mysql/conf.d -v $PWD/logs:/logs -v $PWD/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql -d mysql
+
+-命令说明($PWD是指输入命令时所在的目录位置)：
+
+    -p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口。
+
+    -v -v $PWD/conf:/etc/mysql/conf.d：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf。
+
+    -v $PWD/logs:/logs：将主机当前目录下的 logs 目录挂载到容器的 /logs。
+
+    -v $PWD/data:/var/lib/mysql ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql 。
+
+    -e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。
+	
+	-d docker将容器放在后台运行
+注意：当在外部连接mysql 输入 mysql -h ip -u xxx -p 若出现ERROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded
+	进入容器的mysql，修改密码 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'xxxxoooo';
+
+在容器mymysql中开启一个交互模式的终端:
+ docker exec -it mymysql bash    
+
+docker exec ：在运行的容器中执行命令
+语法:
+docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+OPTIONS说明：
+
+    -d :分离模式: 在后台运行
+
+    -i :即使没有附加也保持STDIN 打开
+
+    -t :分配一个伪终端
+
+docker tomcat:
+-init:
+	docker run --name tomcat -p 8080:8080 -v $PWD/test:/usr/local/tomcat/webapps/test -d tomcat  
+-命令说明：
+
+	-p 8080:8080：将容器的8080端口映射到主机的8080端口
+
+	-v $PWD/test:/usr/local/tomcat/webapps/test：将主机中当前目录下的test挂载到容器的/test	
+	
+	
+Nexus 容器
+	docker run -d --name nexus3 --restart=always \
+    -p 8081:8081 \
+    --mount src=nexus-data,target=/nexus-data \
+    sonatype/nexus3
+	
+附着到容器上：
+	docker attach xxxxx  --需要容器启动(最好用docker exec ...)
+	
+查看日志
+	docker logs xxxx
+	docker logs -f [--lines] xxxx --与tail -f 命令相似
+	docker logs -t xxxx --每条日志项上加上时间戳
+	
+查看容器内的进程
+	docker top xxxx
+	
+自动重启容器
+	docker run --restart=always --name daemon_dave -d ubuntu /
+	bin/sh -c "while true; do echo hello world; sleep 1; done"
+	
+	--restart=on-failure:5    always是无论容器退出的代码是什么，Docker都会自动重启该容器，on-failure:5当容器退出代码为非0时，最多重启5次
+	
+	docker update --restart=always <CONTAINER ID>
+docker inspect xxx 获取容器的详细信息
+镜像保存位置:/var/lib/docker
+容器保存位置:/var/lib/docker/containers
+
+docker构建新镜像
+1 新建文件夹static_web并进入；新建文件Dockerfile
+	如:
+	# Version: 0.0.1
+	FROM ubuntu:latest
+	MAINTAINER WHOYIING "375416934@QQ.COM"
+	RUN apt-get update
+	Run apt-get install -y nginx
+	Run echo 'Hi, I am in your container'  /usr/share/nginx/html/index.html
+	EXPOSE 80
+	
+2 docker build -t "master088088/static_web" .
+也可以为其设置标签: docker build -t "master088088/static_web:v1" .
+上面的命令.指出Dockerfile文件的位置
+	docker build -t "master088088/static_web:v1" \
+	git@github.com:xxx/aaaa
+	即Dockerfilew文件在github的xxx下的aaa仓库中
+无缓存 --no-cache
+
+docker registry
+docker run -p 5000:5000 registry
+
+上传本地image到registry(查看官网的资料)
+	先找到要上传的imageid --docker images xxx
+	使用新的registry给该image打上标签，在镜像名前加上主机名和端口前缀
+		docker tag imageid 主机名:端口/image
+			--docker tag 6871e08ee282 who:5000/master08088/static_web
+	docker push who:5000/master08088/static_web
+
+删除none的镜像，要先删除镜像中的容器。要删除镜像中的容器，必须先停止容器	
+docker rmi $(docker images | grep "none" | awk '{print $3}') 
+
+	
