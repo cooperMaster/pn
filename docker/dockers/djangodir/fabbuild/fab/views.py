@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
-import chardet
+#import chardet
 from . import utils
 from . import config
 
@@ -22,8 +22,8 @@ def download(request):
         with open(file, 'rb') as f:
             while True:
                 c = f.read(chunk_size)
-                encoding = chardet.detect(c)['encoding']
-                print(encoding)
+                # encoding = chardet.detect(c)['encoding']
+                # print(encoding)
                 if c:
                     yield c
                 else:
