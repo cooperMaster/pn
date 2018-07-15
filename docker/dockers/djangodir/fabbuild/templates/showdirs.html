@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for path in logpath %}
+        <a href="showfilecontents?path={{ path }}" title="点击查看日志文件">{{ path }}</a>
+    {% endfor %}
+</body>
+</html>

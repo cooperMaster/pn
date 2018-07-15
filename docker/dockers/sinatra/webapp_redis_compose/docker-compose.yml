@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    image: master088088/sinatra
+    ports:
+     - "4567:4567"
+    volumes:
+     - .:/opt/webapp
+  redis:
+    image: master088088/redis

@@ -1,0 +1,3 @@
+COMMOND
+docker build -t "master088088/website" .            此处  . 指Dockerfile的所在位置
+docker run --name website -p 80 -v $PWD/website:/var/www/html/website -d master088088/sample nginx

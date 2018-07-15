@@ -1,0 +1,27 @@
+COMMOND
+docker build -t master088088/sinatra .
+chmod +x $PWD/webapp/bin/webapp    --chmod保证webapp文件可执行
+ docker run --name sinatra -p 4567 -v $PWD/webapp:/opt/webapp -d master088088/sinatra
+curl -i -H 'Accept:application/json' -d 'name=F&status=b' http://localhost:32770/json
+docker logs sinatra
+
+docker build -t master088088/redis .
+docker run --name redis -p 6379 -d master088088/redis
+安装客户端验证redis sudo apt-get install redis-cli
+	redis-cli -h ip -p port
+
+ip a show dokcer0
+进入容器内，traceroute baidu.com 
+sudo iptables -t nat -L -n
+此3条命令来看容器怎么跳转 todo
+
+容器互联 --webapp_redis
+docker run --name redis2 -d master088088/redis 此处没有指定任何端口
+docker run -p 4567 \
+--name sinatra2 --link redis2:db -it \
+-v $PWD/webapp_redis:/opt/webapp master088088/sinatra \
+/bin/bash
+使用了--link 有两个参数 第一个是要连接的容器名字，第二个是连接后容器的别名
+通过容器相连，父容器可以直接访问任意子容器的端口，所以上面的redis2没有-p 端口
+
+通过父容器 cat /etc/hosts 可以看到连接信息 env 看配置信
