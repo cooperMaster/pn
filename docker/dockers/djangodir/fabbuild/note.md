@@ -10,3 +10,11 @@
 
 * settings.py ALLOWED_HOSTS 会限制访问IP  ALLOWED_HOSTS=['*']代表all
 
+```
+prodcmddir = config.configs.prodcmddir[0]
+new_env = os.environ.copy()
+new_env['CATALINA_HOME'] = prodcmddir
+cmd = prodcmddir + os.path.sep +"bin" + os.path.sep + "shutdown.bat"
+subprocess.Popen(cmd, env=new_env)
+subprocess添加环境变量
+```

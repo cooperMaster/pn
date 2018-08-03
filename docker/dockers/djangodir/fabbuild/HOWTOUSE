@@ -1,0 +1,56 @@
+'logpath' : [r"E:\war\prod"] --为日志文件夹位置，可配置多个日志文件夹
+'uploaddir' : r'E:\war\prod' --上传文件目录位置
+'fabcmd' : r'C:\Users\Administrator\Desktop\cmd\fab.bat'  --脚本命令放置位置
+'unrarcmd' : r"C:\Users\Administrator\Desktop\cmd\UnRAR.exe" --脚本命令放置位置
+'unzipdir' : r"E:\war\unzipdir" --解压文件放置目录
+'backupdir' : r"E:\war\backup"  --备份目录
+'prodplaces' : [r"D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled"] --生产包所在目录(结构要加上项目名)
+'prodcmddir' : [r"D:\TOMCAT\apache-tomcat-7.0.81-x64"]  --中间件所在目录
+
+
+
+
+增量发布：
+    发布前的准备：
+        1 先下载生产包，将增量文件打包进生产包，上传生产包
+        2 将增量包打包成rar包(目前只支持rar,若是导出的jar包，先解压，再打成rar包)，打包请参靠目录结构，
+            若需查找生产目录结构，点击页面“显示生产项目所在目录”即可查看
+        3 解压，选择刚刚上传的增量包进行解压，解压完成后，点击页面“显示解压内容”，可查看目录结构，也可查看解压后的文件
+        4 步骤1 2 3 按顺序执行完后，即可点击“增量发布”按钮进行发布，等待success~
+
+    目录结构：
+    待发布文件所在地 --解压后的文件
+    生产目录所在地  --项目所在，如D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled
+    增量文件所在地  --对应“待发布文件所在地"目录下的内容 与 "生产目录所在地”目录下的内容 路径一致
+    即：
+        “待发布文件所在地”目录下的结构 要与 “增量文件所在地”目录下的结构一致，如：
+        E:\war\unzipdir\B2B\home.jsp
+        E:\war\unzipdir\B2B\WEB-INF\classes\...
+        E:\war\unzipdir\B2B\WEB-INF\lib\...
+
+        D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled\home.jsp
+        D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled\WEB-INF\classes\...
+        D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled\WEB-INF\lib\...
+
+        则：待发布文件所在地：E:\war\unzipdir\B2B ; 增量文件所在地 D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled
+
+
+
+
+
+
+
+
+
+命令行文件fab.bat的配置(全量发布):
+tomcat所在文件目录
+set CATALINA_HOME=D:\TOMCAT\apache-tomcat-7.0.81-x64
+新建NOE_HOME文件夹（可任意路径下的文件夹名）
+set NOW_HOME=E:\war
+NOW_HOME文件夹下有prod backup unzipdir 文件夹，其中：
+NOW_HOME\prod 对应 'uploaddir'
+NOW_HOME\unzipdir 对应 'unzipdir'
+NOW_HOME\backup 对应进行发布时，对生产包的备份
+
+set WEB_WAR=untitled.war  --项目war包
+set WEB_NAME=untitled     --项目名

@@ -13,13 +13,10 @@
                     type:'POST',
                     success: function(data) {
                         console.log(data);
-                        var arr = JSON.parse(data.filecontentlist);
-                        for (var i=0; i< arr.length; i++){
-
-                            for (var j=0; j< arr[i].filecontents.length; j++){
-                                $('#unzipSelect').append("<option value="+ arr[i].filecontents[j].abspath +"> "+ arr[i].filecontents[j].name +" </option>");
+                        for (var i=0; i< data.length; i++){
+                            for (var j=0; j< data[i].filecontents.length; j++){
+                                $('#unzipSelect').append("<option value="+ data[i].filecontents[j].abspath +"> "+ data[i].filecontents[j].name +" </option>");
                             }
-
                         }
                     }
            });
@@ -29,9 +26,8 @@
                     type:'POST',
                     success: function(data) {
                         console.log(data);
-                        var arr = JSON.parse(data.middlewarename);
-                        for (var i=0; i< arr.length; i++){
-                            $('#middleware').append("<option value="+ arr[i] +"> "+ arr[i] +" </option>");
+                    for (var i=0; i< data.length; i++){
+                            $('#middleware').append("<option value="+ data[i] +"> "+ data[i] +" </option>");
                         }
                     }
            });
@@ -56,14 +52,14 @@
                     success: function(data) {
                         alert("upload success");
                         console.log(data);
-                        var arr = JSON.parse(data.filecontentlist);
+
                         var showContentlabel = '';
                         $('#unzipSelect').empty();
-                        for (var i=0; i< arr.length; i++){
-                            showContentlabel += arr[i].filedir + "<br/>";
-                            for (var j=0; j< arr[i].filecontents.length; j++){
-                                showContentlabel += arr[i].filecontents[j].fileshowname + "<br/>";
-                                $('#unzipSelect').append("<option value="+ arr[i].filecontents[j].abspath +"> "+ arr[i].filecontents[j].name +" </option>");
+                        for (var i=0; i< data.length; i++){
+                            showContentlabel += data[i].filedir + "<br/>";
+                            for (var j=0; j< data[i].filecontents.length; j++){
+                                showContentlabel += data[i].filecontents[j].fileshowname + "<br/>";
+                                $('#unzipSelect').append("<option value="+ data[i].filecontents[j].abspath +"> "+ data[i].filecontents[j].name +" </option>");
                             }
 
                         }

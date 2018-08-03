@@ -26,7 +26,7 @@ def dirsTree(startPath,notFilter=None):
 
         indent = '|__' * 1 * level + ''
         filedir = '%s%s fileCount:%s' % (indent, os.path.split(root)[1], fileCount)
-        print(filedir)
+        print filedir
         fcs = []
 
         for filename in files:
@@ -38,15 +38,15 @@ def dirsTree(startPath,notFilter=None):
             if filesize > 1024 * 100:
                 filesize = filesize / (1024 * 1024)
                 showfilesname = ('%s|__%s  (mtime:%s | size:%.2f M)' % (indent, filename, filetime, filesize))
-                print(showfilesname)
+                print showfilesname
             else:
                 filesize = filesize / 1024
                 showfilesname = ('%s|__%s  (mtime:%s | size:%.2f K)' % (indent, filename, filetime, filesize))
-                print(showfilesname)
-            print("abspath: %s" % abspath)
+                print showfilesname
+            print "abspath: %s" % abspath
 
             fcs.append(Filecontent(filename, abspath, filetime, filesize, showfilesname))
 
         dircontents.append(Files(filedir, fcs ) )
-    print(dircontents)
+    print dircontents
     return dircontents
