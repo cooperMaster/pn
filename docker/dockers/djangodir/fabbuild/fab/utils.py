@@ -2,15 +2,24 @@
 import os
 import time
 from fab.Files import Files,Filecontent
+from . import process
 
 def fileCntIn(currPath):
     '''汇总当前目录下文件数'''
     return sum([len(files) for root, dirs, files in os.walk(currPath)])
 
-def dirsTree(startPath):
+def dirsTree(startPath,notFilter=None,covert=None):
     '''树形打印出目录结构'''
     dircontents = []
+    # 只过滤掉startPath目录下的非notFilter文件夹 即startPath第一层目录中的非notFilter文件夹
+    count = 0
     for root, dirs, files in os.walk(startPath):
+
+        if notFilter  and count == 1:
+            if notFilter != os.path.basename(root):
+                continue
+
+        count = count + 1
         #获取当前目录下文件数
         fileCount = fileCntIn(root)
         #获取当前目录相对输入目录的层级关系,整数类型
@@ -36,9 +45,12 @@ def dirsTree(startPath):
                 showfilesname = ('%s|__%s  (mtime:%s | size:%.2f K)' % (indent, filename, filetime, filesize))
                 print(showfilesname)
             print("abspath: %s" % abspath)
+            # windows采用“\”，js会将“\”转义 在python里为"E:\\AA\\BB" 传到js中后是"E:AABB" 加此法转换"E:\\\\AA\\\\BB"
+            if covert:
+                abspath = abspath.replace("\\","\\\\")
 
             fcs.append(Filecontent(filename, abspath, filetime, filesize, showfilesname))
-
+        fcs.sort(key=lambda file: file.filetime, reverse=True)
         dircontents.append(Files(filedir, fcs ) )
     print(dircontents)
     return dircontents

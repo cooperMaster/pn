@@ -1,0 +1,53 @@
+#!/bin/sh
+#chkconfig: 2345 20 81
+
+EXEC_PATH=/usr/local/apps/jboss/bin
+EXEC=standalone.sh
+DAEMON=/usr/local/apps/jboss/bin/standalone.sh
+PID_FILE=jboss
+
+. /etc/rc.d/init.d/functions
+if [ ! -x $EXEC_PATH/$EXEC ] ; then
+       echo "ERROR: $DAEMON start file do not exists ,please check that directory!"
+       exit 1
+fi
+  
+stop()
+{
+       echo "Stoping $EXEC ..."
+       ps -ef|grep /usr/local/apps/jboss|grep -v grep|cut -c 9-15|xargs kill -s 9
+       echo "Shutting down $EXEC: [  OK  ]"
+}
+
+start()
+{
+       echo "Start jboss $EXEC ..."
+       nohup ./usr/local/apps/jboss/bin/standalone.sh -b 0.0.0.0 > /dev/null 2>&1 &
+       echo "Jboss start ok.."
+}
+
+restart()
+{
+    stop
+    start
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        #./usr/local/apps/jboss/bin/jboss-cli.sh --connect --command=:shutdown
+        stop
+        ;;
+    restart)
+        stop
+                start
+        ;;
+    status)
+        status -p $PID_FILE $DAEMON
+        ;;
+    *)
+        echo "Usage: service $EXEC {start|stop|restart|status}"
+        exit 1
+esac

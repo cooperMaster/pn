@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type='text/javascript' src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <link href="{% static "css/demo.css" %}" rel='stylesheet' type='text/css'>
+    <script>
+        $(document).ready(function () {
+           $.ajax({
+                    url:'showfilecontents',
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+                        for (var i=0; i< data.length; i++){
+                            for (var j=0; j< data[i].filecontents.length; j++){
+                                $('#unzipSelect').append("<option value="+ data[i].filecontents[j].abspath +"> "+ data[i].filecontents[j].name +" </option>");
+                            }
+                        }
+                    }
+           });
+
+            $.ajax({
+                    url:'loadmiddlewarename',
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+                        for (var i=0; i< data.length; i++){
+                            $('#middleware').append("<option value="+ data[i] +"> "+ data[i] +" </option>");
+                        }
+
+
+                        if(data.length > 0){
+                            $('#web').hide()
+                        }else{
+                            $('#app').hide()
+                        }
+                    }
+           });
+
+            $.ajax({
+                    url:'loadweb',
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+                        for (var i=0; i< data.length; i++){
+                            $('#webm').append("<option value="+ data[i] +"> "+ data[i] +" </option>");
+                        }
+                    }
+           });
+
+        });
+        
+        
+        function FileUpload() {
+                var form_data = new FormData();
+                var file_info =$('#file_upload')[0].files[0];
+                form_data.append('file',file_info);
+                if(file_info==undefined) {
+                    alert('你没有选择任何文件');
+                    return false
+                }
+                $.ajax({
+                    url:'upload',
+                    type:'POST',
+                    data: form_data,
+                    processData: false,  // tell jquery not to process the data
+                    contentType: false, // tell jquery not to set contentType
+                    success: function(data) {
+                        alert("upload success");
+                        console.log(data);
+
+                        var showContentlabel = '';
+                        $('#unzipSelect').empty();
+                        for (var i=0; i< data.length; i++){
+                            showContentlabel += data[i].filedir + "<br/>";
+                            for (var j=0; j< data[i].filecontents.length; j++){
+                                showContentlabel += data[i].filecontents[j].fileshowname + "<br/>";
+                                $('#unzipSelect').append("<option value="+ data[i].filecontents[j].abspath +"> "+ data[i].filecontents[j].name +" </option>");
+                            }
+
+                        }
+                        $('#showContent').html(showContentlabel)
+                    }
+                });
+
+        }
+
+        function unzip(){
+            var optVue = $('#unzipSelect option:selected').val();
+            //todo 解压格式
+            if(confirm('要对'+optVue+'进行解压吗')){
+                $.ajax({
+                    url:'unzip',
+                    data:{'pathfile': optVue},
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+
+                        alert(data)
+                    }
+                });
+            }
+        }
+
+        function Fab(mode) {
+            var fromPlace = $('#fromPlace').val();
+            var toPlace = $('#toPlace').val();
+            var prodPlace = $('#prodPlace').val();
+            var middleware = $('#middleware option:selected').val();
+            var isbackup = $('#isbackup option:selected').val();
+            var dataVal;
+            var urlStr;
+            if(!confirm('确认进行'+middleware+'发布？')){
+                return;
+            }
+            if(mode == 'part'){
+                if(fromPlace == '' || prodPlace=='' ){
+                    alert('填写正确的参数');
+                }
+                dataVal = {'fromPlace' : fromPlace,'toPlace' : toPlace, 'prodPlace' : prodPlace, 'middleware' : middleware,'isbackup' : isbackup }
+                urlStr = 'partfab';
+            }else{
+                dataVal = {'middleware' : middleware, 'isbackup' : isbackup }
+                urlStr = 'fab';
+            }
+            $.ajax({
+                    url: urlStr,
+                    type:'POST',
+                    data: dataVal,
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+                    }
+           });
+        }
+
+        function restartmiddleware() {
+            var middleware = $('#middleware option:selected').val();
+            $.ajax({
+                    url: 'restartmiddleware',
+                    type:'POST',
+                    data:{'middleware':middleware},
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+                    }
+           });
+        }
+        
+        function webFab(mode) {
+            var webm = $('#webm option:selected').val();
+            var iswebbackup = $('#iswebbackup option:selected').val();
+            var fromWebPlace = $('#fromWebPlace').val();
+            var toWebPlace = $('#toWebPlace').val();
+            if(!confirm('确认进行'+webm+'发布？')){
+                return;
+            }
+            var dataVal
+            if(mode == 'part'){
+                if(fromWebPlace == '' || toWebPlace == '' ){
+                    alert('填写正确的参数');
+                }
+                dataVal = {'webm' : webm, 'iswebbackup':iswebbackup, 'mode':mode, 'fromWebPlace':fromWebPlace,'toWebPlace':toWebPlace}
+            }else{
+                dataVal = {'webm' : webm, 'iswebbackup':iswebbackup, 'mode':mode }
+            }
+            $.ajax({
+                    url: 'webfab',
+                    type:'POST',
+                    data: dataVal,
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+                    }
+           });
+        }
+    </script>
+</head>
+<section class="flipInX animated">
+    <div class="container">
+    Yeah,it's home page.<br/>
+    <div class="row clearfix">
+        <div class="ctrl">
+            <a href="showlogdirs" >查看日志</a><br/>
+        </div>
+    </div>
+    <br/>
+    <div class="row clearfix">
+        <div class="lbl">
+            <label>文件上传:</label>
+        </div>
+        <div class="ctrl">
+        <input type="file" name="file" id="file_upload">
+        <input type="button" value="上传" onclick="FileUpload()">
+        <div id="showContent"></div>
+        </div><br/>
+    </div><br/>
+
+    <div class="row clearfix">
+        <div class="lbl">
+            <label>选择解压文件:</label>
+            <select id="unzipSelect"></select>
+        </div>
+        <a href="javascript:unzip()">解压</a>
+        <div>
+            <a href="showunzipdir">显示解压内容</a><br/><br/>
+        </div>
+    </div>
+    <br/>
+    <div id="app">
+        <a href="showprodplaces">显示生产项目所在目录</a><br/>
+    <div class="row clearfix">
+        <div class="lbl">
+            <label>中间件选择:</label>
+            <select id="middleware"></select>
+        </div>
+        <br/>
+        <div class="lbl">
+            <label>是否备份:</label>
+            <select id="isbackup">
+                <option selected="selected" value="yes">是</option>
+                <option value="no">否</option>
+            </select>
+        </div>
+        <div class="lbl">
+            <label>全量发布:</label>
+            <a href="javascript:Fab('')">发布</a>
+        </div>
+        <br/>
+        <div class="lbl">
+            <label>增量发布:</label>
+
+        </div>
+        <div class="ctrl">待发布文件所在地:<input type="text" id="fromPlace" width="1000"/></div>
+        <!--
+        <div class="ctrl">生产目录所在地:<input type="text" id="prodPlace"/></div>
+        -->
+        <div class="ctrl">增量文件所在地:<input type="text" id="toPlace" width="1000"/></div>
+        <a href="javascript:Fab('part')">增量发布</a>
+    </div><br/>
+    <div class="row clearfix">
+        <div class="ctrl">
+        <a href="javascript:restartmiddleware()">重启服务</a>
+        </div>
+    </div>
+    </div>
+
+    <div id="web">
+        <div class="row clearfix">
+            <a href="showwebprodplaces">显示生产项目所在目录</a><br/>
+        <div class="lbl">
+            <div class="lbl">
+            <label>前台环境:</label>
+            <select id="webm"></select>
+            </div>
+            <label>是否备份:</label>
+            <select id="iswebbackup">
+                <option selected="selected" value="yes">是</option>
+                <option value="no">否</option>
+            </select>
+        </div>
+        <div class="lbl">
+            <label>全量发布:</label>
+            <a href="javascript:webFab('full')">发布</a>
+        </div>
+        <br/>
+        <div class="lbl">
+            <label>增量发布:</label>
+        </div>
+        <div class="ctrl">待发布文件所在地:<input type="text" id="fromWebPlace" width="1000"/></div>
+        <!--
+        <div class="ctrl">生产目录所在地:<input type="text" id="prodPlace"/></div>
+        -->
+        <div class="ctrl">增量文件所在地:<input type="text" id="toWebPlace" width="1000"/></div>
+        <a href="javascript:webFab('part')">增量发布</a>
+        </div><br/>
+    </div>
+
+    <div id="other">
+        <a href="showpackdirs">显示压缩包所在目录</a><br/>
+    </div>
+    </div>
+</section>
+</body>
+</html>

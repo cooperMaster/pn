@@ -1,0 +1,102 @@
+
+/**
+ * 公共JS
+ */
+$(function(){
+//	initQuickChannel();  //初始化快速通道
+});
+
+function to(url){
+	window.location.href = url;
+}
+
+//回车事件
+$.fn.keyup13 = function(callback){
+	$(this).keyup(function(event){
+		if(event.which=="13"){
+			if(callback){
+				callback();
+			}
+		}
+	});
+}
+
+
+//填充国家数据
+$.fn.fullCountryData = function(defaultval){
+	var $this = $(this);
+	if($this.is("select")){
+		$.getJSON($IECS_PATH+"dict/getCountryList.do",function(result){
+			$.each(result,function(i,item){
+				if(item.code == defaultval)
+					$this.append('<option value="'+item.code+'" selected="selected">'+item.code +"  "+item.name+'</option>');
+				else
+					$this.append('<option value="'+item.code+'">'+item.code +"  "+item.name+'</option>');
+			});
+		});
+	}else{
+		alert("函数[fullCountryData]只能作用于Select元素上.");
+	}
+}
+
+//填充城市数据
+$.fn.fullCityData = function(defaultval){
+	var $this = $(this);
+	if($this.is("select")){
+		$.getJSON($IECS_PATH+"dict/getCityList.do?locale=zh",function(result){
+			$.each(result,function(i,item){
+				if(item.code == defaultval)
+					$this.append('<option value="'+item.code+'" selected="selected">'+item.alias+'</option>');
+				else
+					$this.append('<option value="'+item.code+'">'+item.alias+'</option>');
+			});
+		});
+	}else{
+		alert("函数[fullCountryData]只能作用于Select元素上.");
+	}
+}
+
+//获取国际化属性，KEy值，  DEF 默认值
+function getProp(key, def) {
+	var keyValue = $.i18n.prop(key);
+	if (keyValue == "[" + key + "]" && def) {
+		return def;
+	} else {
+		return keyValue;
+	}
+}
+//初始化国际化
+function initi18n(name){
+	var peropertiesName = name || 'common';
+	$.i18n.properties({
+	    name:peropertiesName,
+	    path:$IECS_PATH+'messages/',
+	    mode:'map',
+	    language:Common.Cookie.get('language'),
+	    callback: function() {
+	    	// if(config.callbk) config.callbk();
+	    }
+	});
+}
+
+
+//窗口居中显示 
+$.fn.popshow = function () { 
+	var $this = $(this);
+    $this.css("top", ( $(window).height() - $this.height() ) / 2 + "px"); 
+    $this.css("left", ( $(window).width() - $this.width() ) / 2 + "px");
+    $this.fixedDiv(); 
+    $this.show();
+    return $this; 
+}
+//窗口隐藏
+$.fn.pophide = function (){
+    this.hide();
+    return this; 
+}
+
+
+$.fn.fixedDiv = function(){
+	var $this = $(this);
+	$(this).css("position","fixed"); 
+};

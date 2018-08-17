@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static "css/demo.css" %}" rel='stylesheet' type='text/css'>
+    <script type='text/javascript' src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            var selectval = $('#zipselect  option:selected').val();
+            if(selectval == "zip"){
+                $("#packdiv").hide();
+            }else{
+                $('#zipdiv').hide();
+            }
+        });
+
+        function download(abspath, filename) {
+            $.post({
+                url:"download",
+                data:{
+                    // csrfmiddlewaretoken:{{ csrf_token }}, //必须写在模板中，才会被渲染
+                    'abspath': abspath,
+                    'filename' : filename
+                }
+            })
+        }
+        
+        function zip() {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+
+            var reg = /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+            var regExp = new RegExp(reg);
+            if(!regExp.test(startDate)){
+            　　alert("开始日期格式不正确，正确格式为：2018-08-01");
+            　　return;
+            }
+            if(!regExp.test(endDate)){
+            　　alert("结束日期格式不正确，正确格式为：2018-08-01");
+            　　return;
+            }
+
+            if(new Date(startDate.replace(/-/g, "/")) > new Date(endDate.replace(/-/g, "/"))){
+                alert('时间填写有误');
+                return;
+            }
+            if(!confirm("将文件压缩，并删除原有文件，若不想删除原有文件，可选择打包功能")){
+                return;
+            }
+            // 传到后台的Array竟然是为None，无力吐槽
+            //var fcls = new Array();
+            {#// {% for files in filecontentlist %}#}
+            //     var filedirs = new Array();
+            //     var filedir = "{{ files.filedir}}";
+            //     var fcs = new Array();
+            {#//     {% for filecontent in files.filecontents %}#}
+            //         var fc = new Array();
+            //         fc.push("{{ filecontent.name }}");
+            //         fc.push("{{ filecontent.abspath }}");
+            //         fc.push("{{ filecontent.filetime }}");
+            //         fc.push("{{ filecontent.filesize }}");
+            //         fc.push("{{ filecontent.fileshowname }}");
+            //         fcs.push(fc);
+            {#//      {% endfor %}#}
+            //     filedirs.push(filedir);
+            //     filedirs.push(fcs);
+            //     fcls.push(filedirs);
+            {#// {% endfor %}#}
+            // alert(fcls)
+            var path = "{{ path }}"
+            var dataVal = {"startDate":startDate, "endDate":endDate, "path":path}
+            $.ajax({
+                    url: 'zip',
+                    type:'POST',
+                    data: dataVal,
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+                    }
+           });
+        }
+
+        function changediv() {
+            var selectval = $('#zipselect  option:selected').val();
+            if(selectval == "zip"){
+                $("#packdiv").hide();
+                $("#zipdiv").show();
+            }else{
+                $('#zipdiv').hide();
+                $("#packdiv").show();
+            }
+
+        }
+
+        function pack() {
+
+            var path = "{{ path }}"
+            var pathdir = $('#pathdir').val();
+            if(pathdir == ""){
+                alert("打包"+path+"文件夹下的内容")
+            }
+            if(!confirm("打包"+path+"下"+pathdir+"文件夹中的内容")){
+                return
+            }
+
+            var dataVal = {"path":path,"pathdir":pathdir}
+            $.ajax({
+                    url: 'pack',
+                    type:'POST',
+                    data: dataVal,
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+                        if(confirm("下载压缩包")){
+                            window.location.href = "showpackdirs";
+                        }
+                    }
+           });
+        }
+
+        function deleteFile(file) {
+            if(!confirm("删除"+file)){
+                return;
+            }
+            $.ajax({
+                    url: 'deletefile',
+                    type:'POST',
+                    data: {"file" : file},
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+
+                    }
+           });
+        }
+    </script>
+</head>
+<body>
+<div class="bounceIn animated">
+<div class="container">
+    <div class="row clearfix">
+        <label>压缩文件:</label>
+        <select id="zipselect" onclick="changediv()">
+            <option value="zip" selected>压缩</option>
+            <option value="pack">打包</option>
+        </select>
+        <div class="ctrl" id="zipdiv">
+            <div >开始日期<input type="text" id="startDate">-结束日期<input type="text" id="endDate"></div>
+            <input type="button" value="压缩" onclick="zip()">
+        </div>
+        <div id="packdiv">
+            文件目录<input type="text" id="pathdir" placeholder="文件夹格式形如:aa|bb">
+            <input type="button" value="打包" onclick="pack()">
+        </div>
+    </div>
+
+    <br/><br/>
+    {% for files in filecontentlist %}
+        {{ files.filedir}} <br/>
+
+        {% for filecontent in files.filecontents %}
+            <a href="download?abspath={{ filecontent.abspath }}&filename={{ filecontent.name }}">{{ filecontent.fileshowname }}<a/><a href="javascript:deleteFile('{{ filecontent.abspath }}')"><img height="15" src="{% static "images/delete.jpg" %}"></a> <br/>
+        {% endfor %}
+         <br/>
+    {% endfor %}
+</div>
+</div>
+</body>
+</html>

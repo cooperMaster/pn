@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static "css/demo.css" %}" rel='stylesheet' type='text/css'>
+    <script type='text/javascript' src="{% static "js/jquery-3.3.1.js" %}"></script>
+
+</head>
+<body>
+
+<div class="fadeInDownBig animated">
+    <div class="container">
+    {% for path in paths %}
+        <a class="showpatha" href="/fab/showfilecontents?path={{ path }}" title="点击查看文件">{{ path }}</a><br/>
+    {% endfor %}
+    </div>
+</div>
+<script>
+        var notFilterStr = '{{ notFilter }}';
+        var notFilters
+        if(notFilterStr !=null && notFilterStr != '')
+            notFilters = notFilterStr.split(",")
+
+        $('.showpatha').each(function(){
+            var href = $(this).attr('href');
+            for(var i in notFilters){
+                $(this).attr('href',href + '&notFilter='+notFilters[i]);
+            }
+
+        })
+    </script>
+</body>
+</html>
