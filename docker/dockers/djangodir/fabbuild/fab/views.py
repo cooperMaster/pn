@@ -354,8 +354,8 @@ def showwebprodplaces(request):
 def deletefile(request):
     file = request.POST.get('file')
     if os.path.isfile(file) is False:
-       return HttpResponse("文件%s不存在" % file)
+       return HttpResponse("文件%s不存在" % str(file))
 
     os.remove(file)
 
-    return HttpResponse("删除%s成功" % file)
+    return HttpResponse("删除%s成功" % str(file))
