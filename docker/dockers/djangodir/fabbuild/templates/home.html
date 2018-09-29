@@ -58,8 +58,8 @@
 
 
         });
-        
-        
+
+
         function FileUpload() {
                 var form_data = new FormData();
                 var file_info =$('#file_upload')[0].files[0];
@@ -183,6 +183,21 @@
                     }
            });
         }
+
+        function showdirspace(){
+            $.ajax({
+                    url: 'showdirspace',
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+                        var showcontent = '';
+                        for(var i=0;i < data.length; i++){
+                            showcontent += ""+data[i] +"";
+                        }
+                        $('#dirspaces').html("<pre>"+showcontent+"</pre>");
+                    }
+           });
+        }
     </script>
 </head>
 <section class="flipInX animated">
@@ -191,6 +206,8 @@
     <div class="row clearfix">
         <div class="ctrl">
             <a href="showlogdirs" >查看日志</a><br/>
+            <a href="showdirspace">查看磁盘空间</a><br/><br/>
+            <div id="dirspaces"></div>
         </div>
     </div>
     <br/>

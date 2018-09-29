@@ -23,4 +23,5 @@ urlpatterns = [
      url(r'^pack', views.pack, name="pack"),
      url(r'^showpackdirs', views.showpackdirs, name="showpackdirs"),
      url(r'^deletefile', views.deletefile, name="deletefile"),
+     url(r'^showdirspace', views.showdirspace, name="showdirspace"),
 ]

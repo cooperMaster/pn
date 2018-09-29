@@ -358,3 +358,15 @@ def deletefile(request):
     os.remove(file)
 
     return HttpResponse("删除%s文件成功" % str(file) )
+
+
+def showdirspace(request):
+    if process.getosplatform() == "Linux":
+        s = os.popen("df -h").readlines()
+        print(s)
+        # return HttpResponse(json.dumps(s), content_type="application/json")
+    elif process.getosplatform() == "Windows":
+        s = os.popen("wmic volume").readlines()
+        # return HttpResponse(os.popen("wmic volume"))
+
+    return render(request,'showdirspace.html',{'spaces': s})

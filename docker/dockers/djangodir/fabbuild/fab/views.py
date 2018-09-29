@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import time
 
+
 # Create your views here.
 def index(requst):
     return HttpResponse("hello~")
@@ -95,7 +96,9 @@ def fab(request):
     type = 'war'
     uploaddir = config.configs.uploaddir
     middlewareReq = request.POST.get('middleware')
+
     isbackup = request.POST.get('isbackup')
+
     prodPlace, prodcmddir = process.getProd(middlewareReq)
     basename = os.path.basename(prodPlace)
     project = uploaddir + os.path.sep + basename + '.' + type
@@ -137,6 +140,7 @@ def unzip(request):
     if os.path.exists(where):
         shutil.rmtree(where)
     os.makedirs(where)
+
     if what.endswith('rar'):
         t = subprocess.call(unrarcmd +" x " + what + " " + where, shell=True)
     elif what.endswith('zip'):
@@ -214,6 +218,7 @@ def pack(request):
     shutil.rmtree(dir)
 
     return HttpResponse("pack success")
+
 
 def showunzipdir(request):
     unzipdir = config.configs.unzipdir
@@ -298,6 +303,7 @@ def restartmiddleware(request):
 
     process.stopmiddleware(middlewareReq, prodcmddir)
     process.startmiddleware(middlewareReq, prodcmddir)
+
     return HttpResponse("restart success")
 
 @csrf_exempt
@@ -359,3 +365,13 @@ def deletefile(request):
     os.remove(file)
 
     return HttpResponse("删除%s成功" % str(file))
+
+@csrf_exempt
+def showdirspace(request):
+    if process.getosplatform() == "Linux":
+        s = os.popen("df -h").readlines()
+    elif process.getosplatform() == "Windows":
+        s = os.popen("wmic volume").readlines()
+
+    return render(request,'showdirspace.html',{'spaces': s})
+

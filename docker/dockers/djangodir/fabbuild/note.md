@@ -17,8 +17,12 @@ new_env['CATALINA_HOME'] = prodcmddir
 cmd = prodcmddir + os.path.sep +"bin" + os.path.sep + "shutdown.bat"
 subprocess.Popen(cmd, env=new_env)
 subprocess添加环境变量
+<<<<<<< HEAD
 ```
 
 windows下的地址：
 用r"E:/war/prod"
 不使用r"c:\\aa\\bb" 反斜杠在html被去掉了 页面显示 s = 'c:\a\b' 而alert(s)是'c:ab'
+=======
+```
+>>>>>>> 4169848cf1622077ed2505a25e0b215043ce2307
