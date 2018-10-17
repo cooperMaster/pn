@@ -1,7 +1,7 @@
 search: docker search xxxx(mysql)
 pull: docker pull xxxx
 查看容器启动情况:docker ps
-docker start :启动一个或多少已经被停止的容器
+docker start :启动一个或多个已经被停止的容器
 docker stop :停止一个运行中的容器
 docker restart :重启容器
 语法:
@@ -29,7 +29,7 @@ docker mysql:
 
     -e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。
 	
-	-d docker将容器放在后台运行
+	-d docker将容器放在后台运行，守护式容器
 注意：当在外部连接mysql 输入 mysql -h ip -u xxx -p 若出现ERROR 2059 (HY000): Authentication plugin 'caching_sha2_password' cannot be loaded
 	进入容器的mysql，修改密码 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'xxxxoooo';
 
@@ -85,6 +85,11 @@ docker inspect xxx 获取容器的详细信息
 镜像保存位置:/var/lib/docker
 容器保存位置:/var/lib/docker/containers
 
+深入容器
+	docker inspect  xxx 可以获得更多的容器信息
+	docker inspect --format='{{ .State.Runing }}' daemon_dave
+	docker inspect --format='{{.Name}} {{.State.Runing}}' daemon_dave
+
 docker构建新镜像
 1 新建文件夹static_web并进入；新建文件Dockerfile
 	如:
@@ -116,5 +121,8 @@ docker run -p 5000:5000 registry
 
 删除none的镜像，要先删除镜像中的容器。要删除镜像中的容器，必须先停止容器	
 docker rmi $(docker images | grep "none" | awk '{print $3}') 
+
+删除所有容器
+	docker rm 'sudo docker ps -a -q'
 
 	
