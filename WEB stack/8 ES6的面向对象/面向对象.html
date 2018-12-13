@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // function User(name, pass) {
+        //     this.name = name;
+        //     this.pass = pass;
+        // }
+        //
+        // User.prototype.showName = function () {
+        //     alert(this.name);
+        // };
+        // User.prototype.showPass = function () {
+        //     alert(this.pass);
+        // }
+
+        //es6的写法
+        class User{
+            constructor(name, pass){
+                this.name = name;
+                this.pass = pass;
+            }
+
+            showName(){
+                alert(this.name);
+            }
+
+            showPass(){
+                alert(this.pass);
+            }
+        }
+
+        var user = new User('aaa','23431');
+        user.showName();
+        user.showPass();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

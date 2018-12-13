@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="browser.min.js"></script>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script type="text/babel">
+        class Item extends React.Component{
+            constructor(...args){
+                super(...args);
+            }
+
+            render(){
+                return <li>{this.props.str}</li>;
+            }
+
+        }
+
+        window.onload=function () {
+            let div1 = document.getElementById('div1');
+
+            ReactDOM.render(
+                <ul>
+                    <Item str="abc"></Item>
+                    <Item str="def"></Item>
+                </ul>,
+                div1
+            )
+        }
+    </script>
+</head>
+<body>
+
+    <div id="div1"></div>
+
+</body>
+</html>

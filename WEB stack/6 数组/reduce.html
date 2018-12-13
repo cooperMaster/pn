@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let arr = [5,7,8,9,1];
+
+        let result = arr.reduce(function (tmp, item, index) {
+            return tmp + item;
+        });
+
+        alert(result);
+
+        let avg = arr.reduce(function (tmp, item, index) {
+            if(index != arr.length -1){
+                return tmp + item;
+            }else{
+                return (tmp + item)/arr.length;
+            }
+        })
+
+        alert(avg);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

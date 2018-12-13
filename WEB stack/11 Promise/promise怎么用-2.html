@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+    <script>
+        function createPromise(url) {
+            return new Promise(function (resolve,reject) {
+                $.ajax({
+                    url,
+                    dataType: 'json',
+                    success(arr){
+                        resolve(arr);
+                    },
+                    error(err){
+                        reject(err);
+                    }
+                })
+            });
+        }
+
+        Promise.all([
+            createPromise('data/arr'),
+            createPromise('data/json')
+        ]).then(function (arr) {
+            let [res1,res2] = arr;
+            alert('success ');
+            alert(res1);
+            alert(res2);
+        },
+        function (err) {
+            console.log(err);
+            alert('failure ' + err);
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

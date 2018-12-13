@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function *show() {
+            alert('a');
+            let a = yield ;
+            alert('b');
+            alert(a);
+        }
+
+        let gen = show();
+
+        gen.next(3);
+        gen.next(5);
+        //a=?
+
+        function *show1(num1, num2) {
+            alert(`${num1}, ${num2}`);
+
+            alert('a');
+            let a = yield ;
+            alert('b');
+            alert(a);
+        }
+
+        let gen1 = show1(6,7);
+
+        gen1.next(3);//第一个next无法给yield传参
+        gen1.next(5);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+    <script>
+        let p = new Promise(function (resolve,reject) {
+            $.ajax({
+                url: 'data/arr',
+                dataType: 'json',
+                success(arr){
+                    resolve(arr);
+                },
+                error(err){
+                    reject(err);
+                }
+            })
+        });
+
+        p.then(function (arr) {
+            alert('success ' + arr);
+        },
+        function (err) {
+            console.log(err);
+            alert('failure ' + err);
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

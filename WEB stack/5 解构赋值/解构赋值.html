@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let [{a,b}, [n1,n2,n3], num, str] = [{a:3, b:4}, [1,2,3], 7, 'aaa'];
+
+        console.log(a,b,n1,n2,n3,num, str);
+
+        let [json, arr, n, s] = [{a:3, b:4}, [1,2,3], 7, 'aaa'];
+        console.log(json, arr, n, s);
+
+        //左右结构不一致
+        //let [a1, b1] = {a1:3, b1:4};
+
+        //右边必须是个合法的
+        // let {a2, b2} = {3, 5};
+
+        //声明和赋值不能分开（
+        // let [a3, b3];
+        // [a3, b3] = [5,6];
+    </script>
+</head>
+<body>
+
+</body>
+</html>

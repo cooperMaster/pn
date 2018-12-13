@@ -1,0 +1,9 @@
+Promise:
+    用同步一样的方式，来书写异步代码
+异步：
+同步：
+
+有了Promise之后的异步：
+Promise.all([$.ajax(),$.ajax()]).then(results =>{},err=>{});
+
+Promise.race

@@ -1,0 +1,21 @@
+兼容性：
+http://kangax.github.io/compat-table/es6/
+http://kangax.github.io/compat-table/es5/
+
+
+兼容老版本浏览器
+编译、转换
+1. 在线转换
+2. 提前编译
+
+babel == browser.js
+
+ES6:
+1. 变量
+2. 函数
+3. 数组
+4. 字符串
+5. 面向对象
+6. Promised
+7. generator
+8. 模块化

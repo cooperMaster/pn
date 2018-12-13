@@ -1,0 +1,81 @@
+npm i yield-runner-blue
+取index.js 改名为runner.js
+
+* 看懂runner.js
+
+async await
+
+Promise本质：等待异步操作结束
+generator本质：无感处理异步操作
+async本质：官方runner
+
+runner(function *(){
+    xxx
+    let res1 = yield 异步操作1;
+    xxxx
+    let res2 = yield 异步操作2;
+});
+
+
+(async () => {
+    xxx
+    let res1 = await 异步操作1;
+    xxxx
+    let res2 = await 异步操作2;
+})();
+
+
+模块化
+1. 民间的===sea.js require.js
+    规范:CMD AMD
+    * 是什么
+    bower i seajs
+2. nodejs模块化
+3. ES6模块化
+
+
+模块
+1 定义 mod1.js
+define(function (require, exports, module){});
+
+2 调用 1.html
+seajs.use(['mod1.js','mod2.js',...], function(mod1,mod2){});
+
+
+node的模块：
+1. 没有define
+2. exports、require、module
+3. 引用自定义模块
+    前面加./ 如require(./a.js)
+    将a.js放到node_modules 如require('a.js
+
+
+ES6模块化
+import
+export
+
+
+Node:
+输出
+exports.xxxx;
+module.exports={x,x2,x3};
+引入
+let mod = require('./aaa.js');
+
+ES6:
+输出
+export {a,aa,aaa}
+引入
+import mod from 'xxx.js'
+
+
+引入babel
+1. 安装babel-cli  npm i -g babel-cli
+
+
+进入babel_es6 直接打开2.html谷歌能显示，IE11不能
+npm init
+更改package.json中的scripts 加入"build": "babel . -d build" 可对js进行编译
+在加入.babelrc文件 npm i babel-preset-env --save-dev
+npm run build （看build里面的js文件和原生js文件有什么差异）
+html文件引入build中的js IE11即可打开成功显示

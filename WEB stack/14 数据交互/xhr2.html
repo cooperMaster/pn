@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            let btn = document.getElementById("btn");
+            btn.onclick = function () {
+                //1 创建对象
+                let xhr = new XMLHttpRequest();
+                alert(xhr.readyState);
+                //2 连接
+                xhr.open('GET','data/json',true);
+                alert(xhr.readyState);
+                //3 发送
+                xhr.send();
+                //4 接收
+                xhr.onreadystatechange=function () {
+                    alert(xhr.readyState);
+                    if(xhr.readyState==4){
+                        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status== 304){
+                            alert('成功');
+                            let json = JSON.parse(xhr.responseText);
+                            alert(json);
+                            console.log(json)
+                        } else {
+                            alert('失败了');
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="btn" id="btn"/>
+</body>
+</html>

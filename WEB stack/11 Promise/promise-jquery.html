@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+    <script>
+        Promise.all([
+            $.ajax({url: 'data/arr', dataType: 'json'}),
+            $.ajax({url: 'data/json', dataType: 'json'}),
+            $.ajax({url: 'data/num', dataType: 'json'})
+        ]).then(results =>{
+            let [arr, json, num] = results;
+            alert('success');
+            console.log(arr);
+            console.log(json);
+            console.log(num);
+        },err =>{
+            alert('failure');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

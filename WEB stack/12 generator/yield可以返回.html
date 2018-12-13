@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function *show() {
+            alert('a');
+            yield 8;
+            alert('b');
+
+            return 6;
+        }
+
+        let gen = show();
+
+        let res1 = gen.next();
+        console.log(res1);//{value: 8, done: false}
+        // let res2 = gen.next();
+        // console.log(res2);//{value: undefined, done: true}
+        //加了return
+        let res2 = gen.next();
+        console.log(res2);//{value: 6, done: true}
+    </script>
+</head>
+<body>
+
+</body>
+</html>

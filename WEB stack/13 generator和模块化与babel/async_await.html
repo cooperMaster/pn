@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+    <script>
+        // async function show() {
+        //     alert('welcome');
+        //
+        //     let arr = await $.ajax({url: 'data/arr',dataType: 'json'});
+        //
+        //     alert('接收到数组' + arr);
+        //
+        //     let json = await $.ajax({url: 'data/json',dataType: 'json'});
+        //     alert('接收到json');
+        //     console.log(json);
+        // }
+
+        // show();
+
+        (async () => {
+            alert('welcome');
+
+            let arr = await $.ajax({url: 'data/arr',dataType: 'json'});
+
+            alert('接收到数组' + arr);
+
+            let json = await $.ajax({url: 'data/json',dataType: 'json'});
+            alert('接收到json');
+            console.log(json);
+        })();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

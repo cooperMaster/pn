@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // window.onload = function () {
+        //     alert('abc');
+        // }
+        window.onload = () => {
+            alert('abc');
+        }
+
+        // let show = function (a,b) {
+        //     alert(a+b);
+        // }
+
+        let show = (a,b) => {
+            alert(a+b);
+        }
+        show(6,12);
+
+        let arr = [5,3,7,2,8,4];
+        // arr.sort(function (n1,n2) {
+        //     return n1-n2;
+        // });
+        arr.sort( (n1,n2) => {
+            return n1-n2;
+        })
+
+        alert(arr);
+
+        // 1. 如果只有一个参数，圆括号可以省
+        // 2. 如果只有一个return，{} 可以省
+        // let add2 = (a) =>{
+        //     return a+2;
+        // }
+        let add2 = a => a+2;
+
+        alert(add2(5));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

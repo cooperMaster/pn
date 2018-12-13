@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let json = {a:3,b:4};
+
+        let str = 'data=' + JSON.stringify(json);
+        str = 'data='+  encodeURIComponent(JSON.stringify(json));
+        alert(str);
+
+        //let json2 = "{a:3, b:4, c:'c' }";
+        //json的标准写法
+        let json2 = '{"a": 3, "b": 4, "c": "c" }';
+        console.log(JSON.parse(json2));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

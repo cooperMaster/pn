@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        // function User(name, pass) {
+        //     this.name = name;
+        //     this.pass = pass;
+        // }
+        //
+        // User.prototype.showName = function () {
+        //     alert(this.name);
+        // };
+        // User.prototype.showPass = function () {
+        //     alert(this.pass);
+        // }
+        //
+        // function VipUser(name, pass, level) {
+        //     User.call(this, name, pass);
+        //     this.level = level;
+        // }
+        //
+        // VipUser.prototype=new User();
+        // VipUser.prototype.constructor=VipUser;
+        //
+        // VipUser.prototype.showLevel=function () {
+        //     alert(this.level);
+        // }
+
+        //es6的写法
+        class User{
+            constructor(name, pass){
+                this.name = name;
+                this.pass = pass;
+            }
+
+            showName(){
+                alert(this.name);
+            }
+
+            showPass(){
+                alert(this.pass);
+            }
+        }
+
+        class VipUser extends User{
+            constructor(name, pass, level){
+                super(name, pass);
+                this.level = level;
+            }
+
+            showLevel(){
+                alert(this.level);
+            }
+        }
+
+
+        var vipUser = new VipUser('bbb','21213',7);
+        vipUser.showName();
+        vipUser.showPass();
+        vipUser.showLevel();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

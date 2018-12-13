@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let a = 12;
+        let b = 7;
+
+        //名字和值(key和value)一样
+        let json = {a, b, c : 55};
+        console.log(json)
+
+        //
+        let jShow = {
+            a : 12,
+            // show: function () {
+            //     alert(this.a);
+            // }
+            show(){
+                alert(this.a);
+            }
+        };
+        jShow.show();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

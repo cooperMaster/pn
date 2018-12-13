@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="browser.min.js"></script>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script type="text/babel">
+        class Item extends React.Component{
+            constructor(...args){
+                super(...args);
+            }
+
+            render(){
+                return <li>{this.props.str}</li>;
+            }
+
+        }
+
+        class ListItem extends React.Component{
+            constructor(...args){
+                super(...args);
+            }
+            /*
+            render(){
+                let aItems = [];
+                for(let i=0;i<this.props.arr.length;i++){
+                    aItems.push(<Item str={this.props.arr[i]}></Item>);
+                }
+                return <ul>
+                    {aItems}
+                </ul>;
+            }
+            */
+            render(){
+                return <ul>
+                    {this.props.arr.map(val => <Item str={val}></Item>)}
+                </ul>;
+
+            }
+
+        }
+
+        window.onload=function () {
+            let div1 = document.getElementById('div1');
+
+            ReactDOM.render(
+                <ListItem arr={['aaa','bbb','ccc']}></ListItem>,
+                div1
+            )
+        }
+    </script>
+</head>
+<body>
+
+    <div id="div1"></div>
+
+</body>
+</html>
