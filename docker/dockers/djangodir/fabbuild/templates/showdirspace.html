@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static "css/demo.css" %}" rel='stylesheet' type='text/css'>
+    <title>磁盘空间</title>
+</head>
+<body>
+<div class="container">
+    <pre>
+    {% for s in spaces %}
+        {{ s }}
+    {% endfor %}
+    </pre>
+    </div>
+</body>
+</html>

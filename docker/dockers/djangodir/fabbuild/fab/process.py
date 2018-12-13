@@ -138,12 +138,12 @@ def mv(soce, dest):
 # mode--全量or增量 type--war包or ear包
 # todo was的ear包全量发布是通过安装来发布
 # war包的目录结构，例如：webapps文件夹下projectname.war projectname
-def backup(prodPlace,mode=None,type='war'):
+def backup(prodPlace, backup,mode=None,type='war'):
     timedir = time.strftime("%Y%m%d", time.localtime())
     timestr = time.strftime("%Y%m%d-%H%M%S", time.localtime())
     basename = os.path.basename(prodPlace)
     # 备份样式为 20180717/projectname-20180717-190008
-    backupdir = config.configs.backupdir +  os.path.sep + timedir + os.path.sep + basename +"-"+ timestr
+    backupdir = backup +  os.path.sep + timedir + os.path.sep + basename +"-"+ timestr
     if os.path.isdir(backupdir) is False:
         print("创建目录%s" % timedir)
         os.makedirs(backupdir)
@@ -152,7 +152,8 @@ def backup(prodPlace,mode=None,type='war'):
         # jboss 没有解压文件
         if os.path.isdir(prodPlace):
             t = shutil.move(prodPlace, backupdir)
-        shutil.move(os.path.dirname(prodPlace) + os.path.sep + basename+"."+type,backupdir)
+        if type!= '':
+            shutil.move(os.path.dirname(prodPlace) + os.path.sep + basename+"."+type,backupdir)
     else:
         #copytree指定的最外层目录必须不存在
         if os.path.isdir(prodPlace):
@@ -173,3 +174,9 @@ def getProd(middlewarename):
             break
 
     return prodPlace,prodcmddir
+
+# windows采用“\”，js会将“\”转义，django模板没有replace方法，无赖此法
+# windows下os.path.sep为“\”
+# def sep():
+#     return "/"
+

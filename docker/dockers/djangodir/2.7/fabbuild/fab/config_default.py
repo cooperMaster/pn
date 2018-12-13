@@ -4,11 +4,13 @@ __author__ = 'whoyiming'
 
 configs = {
     'logpath' : [r"/usr/local/apps/jboss/standalone/log"],
-    'uploaddir' : r'E:\war\prod',
+    'uploaddir' : r'/usr/local/apps/war/prod',
     'fabcmd' : r'C:\Users\Administrator\Desktop\cmd\fab.bat',
     'unrarcmd' : r"C:\Users\Administrator\Desktop\cmd\UnRAR.exe",
-    'unzipdir' : r"E:\war\unzipdir",
-    'backupdir' : r"E:\war\backup",
+    'unzipdir' : r"/usr/local/apps/war/unzipdir",
+    'backupdir' : r"/usr/local/apps/war/backup",
+    'nobackupdir':r"/usr/local/apps/war/nobackup",
+    'packdir' : r"/usr/local/apps/war/pack",
     'javahome' : r"C:\Java\java8\jdk1.8.0_131",
     # 'prodplaces' : [r"D:\TOMCAT\apache-tomcat-7.0.81-x64\webapps\untitled"],
     # 'prodcmddir' : [r"D:\TOMCAT\apache-tomcat-7.0.81-x64"],
@@ -30,5 +32,6 @@ configs = {
             'stopcmd' : ''
         }]
     ],
+    'web' : [r"/usr/local/apps/war/aaaaaa/IMPS"],
 
 }

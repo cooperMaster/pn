@@ -10,6 +10,8 @@ import json
 import os
 import shutil
 import subprocess
+import time
+
 
 # Create your views here.
 def index(requst):
@@ -47,7 +49,7 @@ def showfilecontents(request):
     path = request.GET.get('path')
     notFilter = request.GET.get('notFilter',None)
     if path:
-        return render(request,'showfilecontents.html',{'filecontentlist' : utils.dirsTree(path,notFilter)})
+        return render(request,'showfilecontents.html',{'filecontentlist' : utils.dirsTree(path,notFilter,'convert'),'path':path})
     else:
         path = uploaddir
         filecontentlist = utils.dirsTree(path)
@@ -94,6 +96,9 @@ def fab(request):
     type = 'war'
     uploaddir = config.configs.uploaddir
     middlewareReq = request.POST.get('middleware')
+
+    isbackup = request.POST.get('isbackup')
+
     prodPlace, prodcmddir = process.getProd(middlewareReq)
     basename = os.path.basename(prodPlace)
     project = uploaddir + os.path.sep + basename + '.' + type
@@ -102,7 +107,12 @@ def fab(request):
 
     process.stopmiddleware(middlewareReq, prodcmddir)
 
-    backupdir = process.backup(prodPlace)
+    if isbackup == "yes":
+        backup = config.configs.backupdir
+    else:
+        backup = config.configs.nobackupdir
+    backupdir = process.backup(prodPlace, backup)
+
     if os.path.isdir(prodPlace):
         shutil.rmtree(prodPlace)
 
@@ -130,9 +140,85 @@ def unzip(request):
     if os.path.exists(where):
         shutil.rmtree(where)
     os.makedirs(where)
-    t = subprocess.call(unrarcmd +" x " + what + " " + where, shell=True)
+
+    if what.endswith('rar'):
+        t = subprocess.call(unrarcmd +" x " + what + " " + where, shell=True)
+    elif what.endswith('zip'):
+        shutil.unpack_archive(what,where+os.path.sep+os.path.basename(what).split(".")[0])
     # process.processunzip(where,what)
     return HttpResponse('unzip files success')
+
+# 文件压缩及删除
+@csrf_exempt
+def zip(request):
+    startDate = time.strptime(request.GET.get('startDate'),"%Y-%m-%d")
+    endDate = time.strptime(request.GET.get('endDate'),"%Y-%m-%d")
+    path = request.GET.get('path')
+    filecontentlist = utils.dirsTree(path)
+    timedir = time.strftime("%Y%m%d-%H%M%S", time.localtime())
+    dir = path + os.path.sep + timedir
+    # if os.path.isdir(dir) is False:
+    #     os.makedirs(dir)
+
+    files = []
+    # path文件夹下的文件夹
+    newdirs = []
+    olddirs = []
+    for fc in filecontentlist:
+        fcs = fc.filecontents
+        for file in fcs:
+            filetime = time.strptime(file.filetime,"%Y-%m-%d %H:%M:%S")
+            if filetime >= startDate and filetime < endDate:
+                files.append(file.abspath)
+                newdirs.append(os.path.dirname(file.abspath).replace(path,dir))
+                olddirs.append(os.path.dirname(file.abspath))
+
+    for nd in newdirs:
+        if os.path.isdir(nd) is False:
+            os.makedirs(nd)
+
+    for f in files:
+        shutil.move(f,f.replace(path,dir))
+
+
+    # 压缩
+    if process.getosplatform() == "Linux":
+        os.system("tar czvf "+ dir +".tar " +dir)
+    else:
+        shutil.make_archive(dir,"zip", path, timedir)
+
+    shutil.rmtree(dir)
+    # 还是不删了，别把path给删了
+    # for od in olddirs:
+    #     if path != od and os.path.isdir(od):
+    #         shutil.rmtree(od)
+
+    return HttpResponse('zip success')
+
+@csrf_exempt
+def pack(request):
+    packdir = config.configs.packdir
+    path = request.POST.get('path')
+    pathdir = request.POST.get('pathdir')
+    if pathdir:
+        pathfiles = path + os.path.sep + pathdir.replace("|",os.path.sep)
+    else:
+        pathfiles = path
+    if os.path.isdir(pathfiles) is False:
+        return HttpResponse(str(pathfiles) + "文件夹不存在")
+    timedir = time.strftime("%Y%m%d-%H%M%S", time.localtime())
+    dir = packdir + os.path.sep + timedir
+
+    shutil.copytree(pathfiles,dir)
+
+    if process.getosplatform() == "Linux":
+        os.system("tar czvf "+ dir +".tar " +dir)
+    else:
+        shutil.make_archive(dir, "zip", packdir, timedir)
+    shutil.rmtree(dir)
+
+    return HttpResponse("pack success")
+
 
 def showunzipdir(request):
     unzipdir = config.configs.unzipdir
@@ -154,18 +240,32 @@ def showprodplaces(request):
     return render(request, 'showdirs.html', {'paths': paths,'notFilter' : ','.join(notFilter)})
 
 @csrf_exempt
+def showpackdirs(request):
+    packdir = config.configs.packdir
+
+    if len(packdir) == 0:
+        return HttpResponse("想看压缩文件，联系帅哥明")
+
+    return render(request,'showdirs.html',{'paths' : (packdir,)})
+
+@csrf_exempt
 def partfab(request):
     fromPlace = request.POST.get('fromPlace')
     toPlace = request.POST.get('toPlace')
     # prodPlace = request.POST.get('prodPlace')
+    backup = config.configs.backupdir
     middlewareReq = request.POST.get('middleware')
+    unzipdir = config.configs.unzipdir
+    if len(os.listdir(unzipdir)) == 0:
+        return HttpResponse('没有解压文件，请先上传解压文件，再进行解压')
+
     if middlewareReq.upper().find('JBOSS') >= 0:
         return HttpResponse("JBOSS 只有全量发布")
 
     prodPlace, prodcmddir = process.getProd(middlewareReq)
 
     process.stopmiddleware(middlewareReq, prodcmddir)
-    backupdir = process.backup(prodPlace)
+    backupdir = process.backup(prodPlace,backup)
     newdir, newfile = process.mv(fromPlace, toPlace)
 
     newaddfile = backupdir + os.path.sep +'addfile'
@@ -179,6 +279,11 @@ def partfab(request):
             f.write("%s\n" % str(item))
 
     process.startmiddleware(middlewareReq, prodcmddir)
+
+    # 发完就删除解压包
+    if os.path.exists(unzipdir):
+        shutil.rmtree(unzipdir)
+    os.makedirs(unzipdir)
 
     return HttpResponse("success")
 
@@ -198,4 +303,75 @@ def restartmiddleware(request):
 
     process.stopmiddleware(middlewareReq, prodcmddir)
     process.startmiddleware(middlewareReq, prodcmddir)
+
     return HttpResponse("restart success")
+
+@csrf_exempt
+def loadweb(request):
+    web = config.configs.web
+    webm = [ os.path.basename(x) for x in web]
+    return JsonResponse({'webm': json.dumps(webm)})
+
+@csrf_exempt
+def webfab(request):
+    web = config.configs.web
+    unzipdir = config.configs.unzipdir
+    webmreq = request.POST.get('webm')
+    mode = request.POST.get('mode')
+    iswebbackup = request.POST.get('iswebbackup')
+
+    if len(os.listdir(unzipdir)) == 0:
+        return HttpResponse('没有解压文件，请先上传解压文件，再进行解压')
+
+    for x in web:
+        if x.endswith(webmreq):
+            prodPlace = x
+
+    if iswebbackup == 'yes':
+        backup = config.configs.backupdir
+    else:
+        backup= config.configs.nobackupdir
+
+    process.backup(prodPlace,backup,mode,'')
+    if mode == 'part':
+        fromWebPlace = request.POST.get('fromWebPlace')
+        toWebPlace = request.POST.get('toWebPlace')
+        process.mv(fromWebPlace, toWebPlace)
+    else:
+        process.mv(unzipdir,os.path.dirname(prodPlace))
+
+    # 发完就删除解压包
+    if os.path.exists(unzipdir):
+        shutil.rmtree(unzipdir)
+    os.makedirs(unzipdir)
+
+    return HttpResponse('发布成功')
+
+@csrf_exempt
+def showwebprodplaces(request):
+    web = config.configs.web
+
+    if len(web) == 0:
+        return HttpResponse("想进行增量发布，联系帅哥明")
+
+    return render(request, 'showdirs.html', {'paths': web})
+
+@csrf_exempt
+def deletefile(request):
+    file = request.POST.get('file')
+    if os.path.isfile(file) is False:
+       return HttpResponse("文件%s不存在" % str(file))
+
+    os.remove(file)
+
+    return HttpResponse("删除%s成功" % str(file))
+
+@csrf_exempt
+def showdirspace(request):
+    if process.getosplatform() == "Linux":
+        s = os.popen("df -h").readlines()
+    elif process.getosplatform() == "Windows":
+        s = os.popen("wmic volume").readlines()
+
+    return render(request,'showdirspace.html',{'spaces': s})
+

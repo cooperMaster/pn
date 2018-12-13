@@ -1,0 +1,15 @@
+ClearCase CopyAreaDB|4
+ECS_I\ECS_I_src\WebContent\scripts\base\jQueryUI
+2
+b
+18:jquery.bgiframe-2.1.2.js|1|13f52610859|6bc|d59e00b8|d96489ed24414021a3e8e33fc38b58ff|0
+16:jquery.ui.draggable.js|1|13f52610a6c|7990|f9fe1b75|7ce44a16e96e48519ccf6019d01e506b|0
+15:jquery.ui.position.js|1|13f52610a8c|2337|a4abdaee|a78056e524764f74a0428a51bbfab6f1|0
+13:jquery.ui.dialog.js|1|13f52610878|5472|cc0fca7a|dd8a575bd7324ff4883fd11be8442364|0
+13:jquery.ui.widget.js|1|13f52610a8c|1b5b|6c3c690a|bb783c63e71e4535b13b3a6338d684a5|0
+16:jquery.ui.accordion.js|1|13f52610859|3f73|6e9a4760|67bdf00da7ce401e9b064ee66a48bc44|0
+13:jquery.ui.button.js|1|13f52610859|2c4e|18af633d|e34d98b9b762489b9227b08e75960ec9|0
+c:.copyarea.db|1|13f52610859|360|91d90896|da590452ec0e49909ba651456344c7c4|0
+12:jquery.ui.mouse.js|1|13f52610a8c|117f|df02af7a|e162e501d9c148cf88fe48ca6c0a29be|0
+11:jquery.ui.core.js|1|13f52610878|229d|32b059e5|4a7b2ee09de94c579bbec66cf30569a6|0
+11:jquery.ui.tabs.js|1|13f52610a8c|52ec|8cbed888|482486ff0daa4c4fb7b6885232fe2f3a|0

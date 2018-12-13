@@ -24,6 +24,7 @@
                     }
            });
 
+
             $.ajax({
                     url:'loadmiddlewarename',
                     type:'POST',
@@ -33,12 +34,32 @@
                         for (var i=0; i< arr.length; i++){
                             $('#middleware').append("<option value="+ arr[i] +"> "+ arr[i] +" </option>");
                         }
+
+                        if(arr.length > 0){
+                            $('#web').hide()
+                        }else{
+                            $('#app').hide()
+                        }
+
                     }
            });
 
+            $.ajax({
+                    url:'loadweb',
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+                        var arr = JSON.parse(data.webm);
+                        for (var i=0; i< arr.length; i++){
+                            $('#webm').append("<option value="+ arr[i] +"> "+ arr[i] +" </option>");
+                        }
+                    }
+           });
+
+
         });
-        
-        
+
+
         function FileUpload() {
                 var form_data = new FormData();
                 var file_info =$('#file_upload')[0].files[0];
@@ -95,16 +116,20 @@
             var toPlace = $('#toPlace').val();
             var prodPlace = $('#prodPlace').val();
             var middleware = $('#middleware option:selected').val();
+            var isbackup = $('#isbackup option:selected').val();
             var dataVal;
             var urlStr;
+            if(!confirm('确认进行'+middleware+'发布？')){
+                return;
+            }
             if(mode == 'part'){
                 if(fromPlace == '' || prodPlace=='' ){
                     alert('填写正确的参数');
                 }
-                dataVal = {'fromPlace' : fromPlace,'toPlace' : toPlace, 'prodPlace' : prodPlace, 'middleware' : middleware }
+                dataVal = {'fromPlace' : fromPlace,'toPlace' : toPlace, 'prodPlace' : prodPlace, 'middleware' : middleware, 'isbackup':isbackup }
                 urlStr = 'partfab';
             }else{
-                dataVal = {'middleware' : middleware }
+                dataVal = {'middleware' : middleware, 'isbackup':isbackup }
                 urlStr = 'fab';
             }
             $.ajax({
@@ -130,6 +155,49 @@
                     }
            });
         }
+
+        function webFab(mode) {
+            var webm = $('#webm option:selected').val();
+            var iswebbackup = $('#iswebbackup option:selected').val();
+            var fromWebPlace = $('#fromWebPlace').val();
+            var toWebPlace = $('#toWebPlace').val();
+            if(!confirm('确认进行'+webm+'发布？')){
+                return;
+            }
+            var dataVal
+            if(mode == 'part'){
+                if(fromWebPlace == '' || toWebPlace == '' ){
+                    alert('填写正确的参数');
+                }
+                dataVal = {'webm' : webm, 'iswebbackup':iswebbackup, 'mode':mode, 'fromWebPlace':fromWebPlace,'toWebPlace':toWebPlace}
+            }else{
+                dataVal = {'webm' : webm, 'iswebbackup':iswebbackup, 'mode':mode }
+            }
+            $.ajax({
+                    url: 'webfab',
+                    type:'POST',
+                    data: dataVal,
+                    success: function(data) {
+                        console.log(data);
+                        alert(data)
+                    }
+           });
+        }
+
+        function showdirspace(){
+            $.ajax({
+                    url: 'showdirspace',
+                    type:'POST',
+                    success: function(data) {
+                        console.log(data);
+                        var showcontent = '';
+                        for(var i=0;i < data.length; i++){
+                            showcontent += ""+data[i] +"";
+                        }
+                        $('#dirspaces').html("<pre>"+showcontent+"</pre>");
+                    }
+           });
+        }
     </script>
 </head>
 <section class="flipInX animated">
@@ -138,6 +206,8 @@
     <div class="row clearfix">
         <div class="ctrl">
             <a href="showlogdirs" >查看日志</a><br/>
+            <a href="showdirspace">查看磁盘空间</a><br/><br/>
+            <div id="dirspaces"></div>
         </div>
     </div>
     <br/>
@@ -160,19 +230,30 @@
         <a href="javascript:unzip()">解压</a>
         <div>
             <a href="showunzipdir">显示解压内容</a><br/><br/>
-            <a href="showprodplaces">显示生产项目所在目录</a><br/>
+
         </div>
     </div>
     <br/>
+
+    <div id="app">
     <div class="row clearfix">
+        <a href="showprodplaces">显示生产项目所在目录</a><br/>
         <div class="lbl">
             <label>中间件选择:</label>
             <select id="middleware"></select>
         </div>
         <div class="lbl">
+            <label>是否备份:</label>
+            <select id="isbackup">
+                <option selected="selected" value="yes">是</option>
+                <option value="no">否</option>
+            </select>
+        </div>
+        <div class="lbl">
             <label>全量发布:</label>
             <a href="javascript:Fab('')">发布</a>
         </div>
+        <br/>
         <div class="lbl">
             <label>增量发布:</label>
 
@@ -189,6 +270,43 @@
         <div class="ctrl">
         <a href="javascript:restartmiddleware()">重启服务</a>
         </div>
+    </div>
+    </div>
+
+
+    <div id="web">
+        <div class="row clearfix">
+            <a href="showwebprodplaces">显示生产项目所在目录</a><br/>
+        <div class="lbl">
+            <div class="lbl">
+            <label>前台环境:</label>
+            <select id="webm"></select>
+            </div>
+            <label>是否备份:</label>
+            <select id="iswebbackup">
+                <option selected="selected" value="yes">是</option>
+                <option value="no">否</option>
+            </select>
+        </div>
+        <div class="lbl">
+            <label>全量发布:</label>
+            <a href="javascript:webFab('full')">发布</a>
+        </div>
+        <br/>
+        <div class="lbl">
+            <label>增量发布:</label>
+        </div>
+        <div class="ctrl">待发布文件所在地:<input type="text" id="fromWebPlace" width="1000"/></div>
+        <!--
+        <div class="ctrl">生产目录所在地:<input type="text" id="prodPlace"/></div>
+        -->
+        <div class="ctrl">增量文件所在地:<input type="text" id="toWebPlace" width="1000"/></div>
+        <a href="javascript:webFab('part')">增量发布</a>
+    </div><br/>
+    </div>
+
+    <div id="other">
+        <a href="showpackdirs">显示压缩包所在目录</a><br/>
     </div>
     </div>
 </section>

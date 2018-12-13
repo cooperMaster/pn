@@ -47,6 +47,9 @@ def dirsTree(startPath,notFilter=None):
 
             fcs.append(Filecontent(filename, abspath, filetime, filesize, showfilesname))
 
+        fcs.sort(key=lambda file : file.filetime, reverse=True)
+
         dircontents.append(Files(filedir, fcs ) )
+
     print dircontents
     return dircontents

@@ -16,4 +16,12 @@ urlpatterns = [
      url(r'^partfab', views.partfab, name="partfab"),
      url(r'^loadmiddlewarename', views.loadmiddlewarename, name="loadmiddlewarename"),
      url(r'^restartmiddleware', views.restartmiddleware, name="restartmiddleware"),
+     url(r'^loadweb', views.loadweb, name="loadweb"),
+     url(r'^webfab', views.webfab, name="webfab"),
+     url(r'^showwebprodplaces', views.showwebprodplaces, name="showwebprodplaces"),
+     url(r'^zip', views.zip, name="zip"),
+     url(r'^pack', views.pack, name="pack"),
+     url(r'^showpackdirs', views.showpackdirs, name="showpackdirs"),
+     url(r'^deletefile', views.deletefile, name="deletefile"),
+     url(r'^showdirspace', views.showdirspace, name="showdirspace"),
 ]

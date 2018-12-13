@@ -15,4 +15,12 @@ urlpatterns = [
     path('partfab', views.partfab, name="partfab"),
     path('loadmiddlewarename', views.loadmiddlewarename, name="loadmiddlewarename"),
     path('restartmiddleware', views.restartmiddleware, name="restartmiddleware"),
+    path('loadweb', views.loadweb, name="loadweb"),
+    path('webfab', views.webfab, name="webfab"),
+    path('showwebprodplaces', views.showwebprodplaces, name="showwebprodplaces"),
+    path(r'zip', views.zip, name="zip"),
+    path(r'pack', views.pack, name="pack"),
+    path(r'showpackdirs', views.showpackdirs, name="showpackdirs"),
+    path(r'deletefile', views.deletefile, name="deletefile"),
+    path(r'showdirspace', views.showdirspace, name="showdirspace"),
 ]
