@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background: black}
+        #c1{background: white; text-align: center}
+    </style>
+    <script>
+        window.onload = function () {
+            let can = document.getElementById('c1');
+            let gd = can.getContext('2d');//绘图接口
+
+            gd.moveTo(200, 100);
+            gd.lineTo(300, 300);
+            gd.strokeStyle = 'red';
+            gd.stroke();
+
+            gd.beginPath();
+
+            gd.moveTo(100, 150);
+            gd.lineTo(200, 300);
+            gd.strokeStyle = 'yellow';
+            gd.stroke();
+        }
+    </script>
+</head>
+<body>
+    <canvas id="c1" height="500" width="400"></canvas>
+</body>
+</html>

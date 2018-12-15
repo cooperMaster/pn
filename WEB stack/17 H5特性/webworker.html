@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = () => {
+            let t1 = document.getElementById('t1');
+            let t2 = document.getElementById('t2');
+            let btn1 = document.getElementById('btn1');
+
+            btn1.onclick = () => {
+                let n1 = parseInt(t1.value);
+                let n2 = parseInt(t2.value);
+                // 创建子进程
+                let ws = new Worker('wk.js');
+
+                //2 发送
+                ws.postMessage({n1, n2});
+
+                //6 接收结束
+                ws.onmessage = (env) => {
+                    alert(env.data);
+                }
+
+            };
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="t1"/>
+    <input type="text" id="t2"/>
+    <input type="button" value="SUM" id="btn1"/>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = () => {
+            let t = 5;
+            setInterval( ()=>{
+                t--;
+                document.getElementById('s1').innerText = t;
+
+                if (t ==0){
+                    window.location="/1.html";
+                }
+            },1000);
+        }
+
+    </script>
+</head>
+<body>
+    <p>很抱歉，您要访问的页面不存在！</p>
+    <div>页面将于<span id="s1">5</span>秒后跳回首页</div>
+</body>
+</html>

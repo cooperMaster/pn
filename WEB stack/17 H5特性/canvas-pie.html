@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background: black; text-align: center}
+        #c1{background: white; }
+    </style>
+    <script>
+        function angle2arc (angle){
+            return angle*Math.PI/180;
+        }
+        function arc2angle (arc){
+            return 180*arc/Math.PI;
+        }
+
+
+        window.onload = () => {
+            let arr = [230,120,320,90];
+            let sum = arr.reduce((tmp, item, index) => tmp+item );
+            let angles = arr.map(item => 360*item/sum);
+
+            let can = document.getElementById('c1');
+            let gd = can.getContext('2d');//绘图接口
+            let cx =200,cy=200,r=150;
+
+
+            function pie(startAng,endAng,color){
+                gd.beginPath();
+
+                gd.moveTo(cx, cy);
+                let x = cx + Math.sin(angle2arc(startAng))*r;
+                let y = cy - Math.cos(angle2arc(startAng))*r;
+
+                gd.lineTo(x, y);
+                gd.stroke();
+
+                gd.arc(cx, cy, r, angle2arc(startAng-90),angle2arc(endAng-90),false);
+                gd.closePath();
+
+                gd.fillStyle = color;
+                gd.fill();
+            }
+
+            let last = 30;
+            let colors = ['red','yellow','pink','blue'];
+
+            angles.forEach( (item,index) => {
+                pie(last, last+item,colors[index]);
+                last += item;
+            });
+        };
+
+    </script>
+</head>
+<body>
+    <canvas id="c1" height="500" width="400"></canvas>
+</body>
+</html>

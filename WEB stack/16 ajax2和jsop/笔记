@@ -1,0 +1,17 @@
+
+
+http2  RFC 7540
+1. 强制https
+2. 性能更高---面向流、头压缩、多路复用
+3. 双向通信---服务器推送
+
+ajax2.0 IE10+
+1. FormData
+    set/get/append
+2. 文件上传、上传进度监控
+    xhr.upload
+            .onload
+            .onprogress
+3. CORS跨域*
+
+AJAX长连接

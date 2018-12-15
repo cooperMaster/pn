@@ -1,0 +1,63 @@
+1. geolocation -- 定位
+PC -- ip地址
+        精度低
+手机 -- GPS
+
+window.navigator.geolocation
+    单次： getCurrentPosition(成功，失败，参数)
+            enableHighAccuracy  高精度模式---更慢、更耗电
+            timeout             超时
+            maximumAge          缓存时间
+
+            结果：
+                latitude/longitude  纬度/经度
+                altitude            海拔高度
+
+                accuracy            精确度
+                altitudeAccuracy    高精确度
+                heading             朝向
+                speed               速度
+
+    监听： watchPosition(成功，失败，参数)
+
+2. video audio
+    video
+        src 地址
+        autoplay
+        loop
+        poster  封面地址
+
+     video 支持什么格式 --- 通用格式mp4
+     IE             wmv MP4
+     Chrome         webq MP4
+     FireFox        ogv  MP4
+
+
+webWorker --- 浏览器上实现的多进程
+优点：
+1. 充分利用资源
+2. 防止主进程卡住
+
+缺点：
+不能执行任何UI操作，子进程只能执行计算型任务
+
+结论：WebWorker在工作中用的很少---web中计算型任务不多
+
+
+//ondragenter 进入
+//ondragleave 离开
+//ondragover 悬停--只要没走就一直发生
+//ondrop     松开鼠标--如果ondragover不阻止默认事件，drop不会发生
+
+reader.readAsText(file)         文本                  文本文件
+reader.readAsDataURL(file)      base64                 图片
+reader.readAsArrayBuffer(file)  原始二进制数据         编辑  --不实用
+reader.readAsBinaryString(file) 二进制的文本形式数据   上传
+
+canvas
+
+路径
+moveTo
+lineTo
+beginPath --- 清楚之前的路径
+closePath --- 闭合路径

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .mine {
+            background: greenyellow;}
+    </style>
+    <script src="../jquery.min.js"></script>
+    <script src="http://localhost:8888/socket.io/socket.io.js"></script>
+    <script>
+        $(function () {
+            let conn = io.connect('ws://localhost:8888');
+
+            let btn1 = document.getElementById('btn1');
+            let btn2 = document.getElementById('btn2');
+
+            let curr_user;
+            btn2.onclick = () => {
+                conn.emit('reg',$('#user').val(),$('#pass').val());
+            };
+
+            btn1.onclick = () => {
+                conn.emit('login',$('#user').val(),$('#pass').val());
+                curr_user= $('#user').val();
+            };
+
+            conn.on('reg_ret', (code, msg) => {
+                if (code) {
+                    alert('失败：' + msg);
+                } else {
+                    alert(msg);
+                }
+            });
+
+            conn.on('login_ret', (code, msg) => {
+                if (code) {
+                    alert('失败：' + msg);
+                } else {
+                    //登录成功
+                    alert(msg);
+                }
+            });
+
+            let opt = document.getElementById("opt");
+            let text1 = document.getElementById("text1");
+            let send = document.getElementById("send");
+            send.onclick = () => {
+                conn.emit('msg', text1.value);
+            };
+
+            conn.on('msg_ret', (code, msg) => {
+                if (code) {
+                    alert('消息发送失败 ' +msg);
+                } else {
+                    console.log(msg);
+                    let li = document.createElement('li');
+                    li.className = 'mine';
+                    li.innerHTML = `<h4>${curr_user}:${text1.value}</h4>`;
+                    opt.appendChild(li);
+
+                    text1.value = '';
+                }
+            });
+
+            conn.on('msg', (user, msg)  => {
+                let li = document.createElement('li');
+
+                li.innerHTML = `<h4>${user}:${msg}</h4>`;
+                opt.appendChild(li);
+            });
+
+        });
+    </script>
+</head>
+<body>
+用户：<input type="text" id="user"/><br/>
+密码：<input type="password" id="pass"/><br/>
+<input type="button" value="登录" id="btn1"/><input type="button" value="注册" id="btn2"/><br/>
+<input type="text" id="text1">
+
+</input><input type="button" value="发送" id="send"/>
+<ul id="opt">
+
+</ul>
+</body>
+</html>

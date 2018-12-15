@@ -1,0 +1,29 @@
+
+
+
+
+数据库:
+1. 关系型数据库---MySQL Oracle
+2. 文件型数据库---SQLite
+3. 文档型数据库---MongoDB
+4. 空间小数据库---坐标、位置
+
+NoSQL:
+Redis、memcached、bigtable、hypertable
+
+user:
+id int primary key
+username varchar(32)
+password varchar(32)
+online bit
+
+create table user(
+    `id` int primary key auto_increment,
+    username varchar(32),
+    password varchar(32),
+    online bit
+);
+
+insert into user(username,password,online) values('aaa','aaa',0);
+insert into user(username,password,online) values('bbb','bbb',1);
+insert into user(username,password,online) values('ccc','ccc',0);

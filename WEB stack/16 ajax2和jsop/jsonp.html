@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=show"></script>-->
+    <script>
+        window.onload = () => {
+            let text1 = document.getElementById("text1");
+
+
+            text1.oninput = () => {
+                let script = document.createElement('script');
+                script.src = `https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=${text1.value}&cb=show`;
+
+                document.head.appendChild(script);
+            }
+
+        }
+
+        function show(json) {
+            let ul1 = document.getElementById("ul1");
+            ul1.innerHTML = '';
+            json.s.forEach(item => {
+                let ol = document.createElement('li');
+                ol.innerHTML= item;
+
+                ul1.appendChild(ol);
+
+            });
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="text1">
+    <ul id="ul1"></ul>
+</body>
+</html>

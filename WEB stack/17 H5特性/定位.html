@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn');
+            btn.onclick = () => {
+                if (window.navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(res => {
+                        alert('定位成功');
+                        console.log(res);
+                    },err => {
+                        alert('定位失败');
+                        console.log(err);
+                    },{
+                        // timeout: 50*1000
+                    });
+                } else {
+                    alert('浏览器不支持定位');
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="定位" id="btn"/>
+</body>
+</html>

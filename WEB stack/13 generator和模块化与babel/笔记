@@ -57,7 +57,7 @@ export
 
 Node:
 输出
-exports.xxxx;
+exports.xxxx = ooo;
 module.exports={x,x2,x3};
 引入
 let mod = require('./aaa.js');

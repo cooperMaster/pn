@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script>
+        let conn = io.connect('ws://localhost:8000');
+
+        conn.emit('h',1,2,3,);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

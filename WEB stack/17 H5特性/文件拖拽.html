@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{width: 400px; height: 200px; background: #ccc;
+            border: 1px; solid-color: black; margin: 50px; text-align: center; line-height: 200px;}
+    </style>
+    <script>
+        window.onload = function(){
+            let div1 = document.getElementById('div1');
+            //ondragenter 进入
+            //ondragleave 离开
+            //ondragover 悬停--只要没走就一直发生
+            //ondrop     松开鼠标--如果ondragover不阻止默认事件，drop不会发生
+            div1.addEventListener('dragenter',function () {
+            div1.innerHTML = '释放鼠标';
+            },false);
+
+            div1.addEventListener('dragleave',function () {
+                div1.innerHTML = '将文件拖拽至此区域';
+            },false);
+
+            //只要没离开，一直发生
+            div1.addEventListener('dragover',function (env) {
+               console.log('dragover');
+
+               env.preventDefault();
+            },false);
+
+            div1.addEventListener('drop',function (env) {
+                console.log(env.dataTransfer.files);
+                console.log('drop');
+
+                env.preventDefault();
+
+                let file = env.dataTransfer.files[0];
+                let reader = new FileReader();
+
+                reader.onload = function () {
+                    console.log(this.result);
+                    alert(this.result);
+                };
+                reader.onerror = function () {
+                    alert('出错了');
+                };
+                reader.readAsText(file);
+            },false);
+
+        };
+    </script>
+</head>
+<body>
+    <div id="div1">
+        将文件拖拽至此区域
+    </div>
+</body>
+</html>

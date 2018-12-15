@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background: black; text-align: center}
+        #c1{background: white; }
+    </style>
+    <script>
+        window.onload = function () {
+            let can = document.getElementById('c1');
+            let color1 = document.getElementById('color1');
+            let gd = can.getContext('2d');//绘图接口
+
+            let color = 'black';
+            let lastX, lastY;
+
+            color1.onchange = function(){
+              color = this.value;
+            };
+            can.onmousedown = function (env) {
+                lastX = env.offsetX;
+                lastY = env.offsetY;
+
+                can.onmousemove = function (env) {
+                    gd.beginPath();
+                    gd.moveTo(lastX, lastY);
+                    gd.lineTo(env.offsetX, env.offsetY);
+
+                    lastX = env.offsetX;
+                    lastY = env.offsetY;
+
+                    gd.strokeStyle = color;
+                    gd.stroke();
+                };
+
+                can.onmouseup = function () {
+                    can.onmousemove = null;
+                    can.onmousesetup = null;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="color" id="color1">
+    <canvas id="c1" height="500" width="400"></canvas>
+</body>
+</html>

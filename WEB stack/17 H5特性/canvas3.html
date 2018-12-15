@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background: black; text-align: center}
+        #c1{background: white; }
+    </style>
+    <script>
+        window.onload = function () {
+            let can = document.getElementById('c1');
+            let gd = can.getContext('2d');//绘图接口
+
+
+            gd.rect(100,100,20,30);
+            gd.stroke();
+
+            gd.beginPath();
+            gd.strokeRect(300,300,40,30);
+
+            //x: number,
+            // y: number,
+            // radius: number,
+            // startAngle: number,
+            // endAngle: number,
+            // anticlockwise?: boolean 是否逆时针
+            gd.arc(200,200,100,0,Math.PI/2,true);
+            gd.stroke();
+        }
+    </script>
+</head>
+<body>
+    <canvas id="c1" height="500" width="400"></canvas>
+</body>
+</html>

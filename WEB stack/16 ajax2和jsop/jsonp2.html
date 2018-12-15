@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=show"></script>-->
+    <script src="../js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('#text1').on('input', () => {
+                $.ajax({
+                    url : 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                    data: {wd: $('#text1').val()},
+                    dataType: 'jsonp',
+                    jsonp: 'cb',
+                    success(json){
+                        $('#ul1').html('');
+                        json.s.forEach(str => {
+                            $(`<li>${str}</li>`).appendTo('#ul1');
+                        });
+                    },
+                    error(){
+                        alert('出错了');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="text1">
+    <ul id="ul1"></ul>
+</body>
+</html>
