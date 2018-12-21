@@ -1,2 +1,3 @@
 
 include::programmerleveling-正式入门.adoc[]
+include::programmerleveling-程序员修养.adoc[]
