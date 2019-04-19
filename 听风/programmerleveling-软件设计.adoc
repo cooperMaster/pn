@@ -1,0 +1,93 @@
+== 软件设计
+学习软件设计的方法、理念、范式和模式，是让你从一个程序员通向工程师的必备技能。要学好这些软件开发和设计的方法，你真的需要磨练和苦行，反复咀嚼，反复推敲，在实践和理论中螺旋式地学习，才能真正掌握。
+
+=== 编程范式
+学习编程范式可以让你明白编程的本质和各种语言的编程方式。
+
+极客时间写的《编程范式游记》系列文章，目录如下:
+
+    *   [编程范式游记（1）- 起源](https://time.geekbang.org/column/article/301)
+    *   [编程范式游记（2）- 泛型编程](https://time.geekbang.org/column/article/303)
+    *   [编程范式游记（3）- 类型系统和泛型的本质](https://time.geekbang.org/column/article/2017)
+    *   [编程范式游记（4）- 函数式编程](https://time.geekbang.org/column/article/2711)
+    *   [编程范式游记（5）- 修饰器模式](https://time.geekbang.org/column/article/2723)
+    *   [编程范式游记（6）- 面向对象编程](https://time.geekbang.org/column/article/2729)
+    *   [编程范式游记（7）- 基于原型的编程范式](https://time.geekbang.org/column/article/2741)
+    *   [编程范式游记（8）- Go 语言的委托模式](https://time.geekbang.org/column/article/2748)
+    *   [编程范式游记（9）- 编程的本质](https://time.geekbang.org/column/article/2751)
+    *   [编程范式游记（10）- 逻辑编程范式](https://time.geekbang.org/column/article/2752)
+    *   [编程范式游记（11）- 程序世界里的编程范式](https://time.geekbang.org/column/article/2754)
+    
+https://en.wikipedia.org/wiki/Programming_paradigm[Wikipedia: Programming paradigm]，维基百科上有一个编程范式的页面，顺着这个页面看下去，你可以看到很多很多有用的和编程相关的知识。这些东西对你的编程技能的提高会非常非常有帮助。
+
+https://www.ybrikman.com/writing/2014/04/09/six-programming-paradigms-that-will/[Six programming paradigms that will change how you think about coding]，中文翻译版为  https://my.oschina.net/editorial-story/blog/890965[六个编程范型将改变你对编程的看法]。这篇文章讲了默认支持并发（Concurrent by default）、依赖类型（Dependent types）、连接性语言（Concatenative languages）、声明式编程（Declarative programming）、符号式编程（Symbolic programming）、基于知识的编程（Knowledge-based programming）等六种不太常见的编程范式，并结合了一些你没怎么听说过的语言来分别进行讲述。
+
+    比如在讲 Concatenative languages 时，以 Forth、cat 和 joy 三种语言为例讲述这一编程范式背后的思想——语言中的所有内容都是一个函数，用于将数据推送到堆栈或从堆栈弹出数据；程序几乎完全通过功能组合来构建（concatenation is composition）。作者认为，这些编程范式背后的思想十分有魅力，能够改变对编程的思考。我看完此文，对此也深信不疑。虽然这些语言和编程范式不常用到，但确实能在思想层面给予人很大的启发。这也是我推荐此文的目的。
+
+https://www.info.ucl.ac.be/~pvr/VanRoyChapter.pdf[Programming Paradigms for Dummies: What Every Programmer Should Know] ，这篇文章的作者彼得 · 范 · 罗伊（Peter Van Roy）是比利时鲁汶大学的计算机科学教师。他在这篇文章里分析了编程语言在历史上的演进，有哪些典型的、值得研究的案例，里面体现了哪些值得学习的范式。
+
+    比如，在分布式编程领域，他提到了 Erlang、E、Distributed Oz 和 Didactic Oz 这四种编程语言。虽然它们都是分布式编程语言，但各有特色，各自解决了不同的问题。通过这篇文章能学到不少在设计编程语言时要考虑的问题，让你重新审视自己所使用的编程语言应该怎样用才能用好，有什么局限性，这些局限性能否被克服等。
+
+http://open.163.com/special/opencourse/paradigms.html[斯坦福大学公开课：编程范式]，这是一门比较基础且很详细的课程，适合学习编程语言的初学者。它通过讲述 C、C++、并发编程、Scheme、Python 这 5 门语言，介绍了它们各自不同的编程范式。以 C 语言为例，它解释了 C 语言的基本要素，如指针、内存分配、堆、C 风格的字符串等，并解释了为什么 C 语言会在泛型编程、多态等方面有局限性。通过学习这门课程，你会对一些常用的编程范式有所了解。
+
+=== 一些软件设计的相关原则
+*Don’t Repeat Yourself (DRY)* ，DRY 是一个最简单的法则，也是最容易被理解的。但它也可能是最难被应用的（因为要做到这样，我们需要在泛型设计上做相当的努力，这并不是一件容易的事）。它意味着，当在两个或多个地方发现一些相似代码的时候，我们需要把它们的共性抽象出来形成一个唯一的新方法，并且改变现有地方的代码让它们以一些合适的参数调用这个新的方法。
+
+*Keep It Simple, Stupid(KISS)* ，KISS 原则在设计上可能最被推崇，在家装设计、界面设计和操作设计上，复杂的东西越来越被众人所鄙视了，而简单的东西越来越被人所认可。宜家（IKEA）简约、高效的家居设计和生产思路；微软（Microsoft）“所见即所得”的理念；谷歌（Google）简约、直接的商业风格，无一例外地遵循了 “KISS” 原则。也正是 “KISS” 原则，成就了这些看似神奇的商业经典。而苹果公司的 iPhone 和 iPad 将这个原则实践到了极至。
+
+*Program to an interface, not an implementation*，这是设计模式中最根本的哲学，注重接口，而不是实现，依赖接口，而不是实现。接口是抽象是稳定的，实现则是多种多样的。在面向对象的 S.O.L.I.D 原则中会提到我们的依赖倒置原则，就是这个原则的另一种样子。还有一条原则叫 Composition over inheritance（喜欢组合而不是继承），这两条是那 23 个经典设计模式中的设计原则。
+
+*You Ain’t Gonna Need It (YAGNI)* ，这个原则简而言之为——只考虑和设计必须的功能，避免过度设计。只实现目前需要的功能，在以后你需要更多功能时，可以再进行添加。如无必要，勿增复杂性。软件开发是一场 trade-off 的博弈。
+
+*Law of Demeter*，迪米特法则 (Law of Demeter)，又称 “最少知识原则”（Principle of Least Knowledge），其来源于 1987 年荷兰大学的一个叫做 Demeter 的项目。克雷格 · 拉尔曼（Craig Larman）把 Law of Demeter 又称作 “不要和陌生人说话”。在《程序员修炼之道》中讲 LoD 的那一章将其叫作 “解耦合与迪米特法则”。
+
+```
+关于迪米特法则有一些很形象的比喻：1) 如果你想让你的狗跑的话，你会对狗狗说还是对四条狗腿说？2) 如果你去店里买东西，你会把钱交给店员，还是会把钱包交给店员让他自己拿？和狗的四肢说话？让店员自己从钱包里拿钱？这听起来有点儿荒唐，不过在我们的代码里这几乎是见怪不怪的事情了。对于 LoD，正式的表述如下：
+
+对于对象 ‘O’中一个方法’M’，M应该只能够访问以下对象中的方法：
+    对象 O；
+    与 O 直接相关的 Component Object；
+    由方法 M 创建或者实例化的对象；
+    作为方法 M 的参数的对象。
+```
+
+
+*面向对象的 S.O.L.I.D 原则*，SRP（Single Responsibility Principle）- 职责单一原则。关于单一职责原则，其核心的思想是：一个类，只做一件事，并把这件事做好，其只有一个引起它变化的原因。单一职责原则可以看作是低耦合、高内聚在面向对象原则上的引申，将职责定义为引起变化的原因，以提高内聚性来减少引起变化的原因。
+
+*OCP（Open/Closed Principle）- 开闭原则*。关于开发封闭原则，其核心的思想是：模块是可扩展的，而不可修改的。也就是说，对扩展是开放的，而对修改是封闭的。对扩展开放，意味着有新的需求或变化时，可以对现有代码进行扩展，以适应新的情况。对修改封闭，意味着类一旦设计完成，就可以独立完成其工作，而不要对类进行任何修改。
+
+*LSP（Liskov substitution principle）- 里氏代换原则*。软件工程大师罗伯特 · 马丁（Robert C. Martin）把里氏代换原则最终简化为一句话：“Subtypes must be substitutable for their base types”。也就是，子类必须能够替换成它们的基类。即子类应该可以替换任何基类能够出现的地方，并且经过替换以后，代码还能正常工作。另外，不应该在代码中出现 if/else 之类对子类类型进行判断的条件。里氏替换原则 LSP 是使代码符合开闭原则的一个重要保证。正是由于子类型的可替换性才使得父类型的模块在无需修改的情况下就可以扩展。
+
+*ISP（Interface Segregation Principle ）- 接口隔离原则*。接口隔离原则的意思是把功能实现在接口中，而不是类中，使用多个专门的接口比使用单一的总接口要好。举个例子，我们对电脑有不同的使用方式，比如：写作、通讯、看电影、打游戏、上网、编程、计算和数据存储等
+
+*DIP（Dependency Inversion Principle）- 依赖倒置原则*。高层模块不应该依赖于低层模块的实现，而是依赖于高层抽象。举个例子，墙面的开关不应该依赖于电灯的开关实现，而是应该依赖于一个抽象的开关的标准接口。这样，当我们扩展程序的时候，开关同样可以控制其它不同的灯，甚至不同的电器。也就是说，电灯和其它电器继承并实现我们的标准开关接口，而开关厂商就可以不需要关于其要控制什么样的设备，只需要关心那个标准的开关标准。这就是依赖倒置原则。
+
+@see https://time.geekbang.org/column/article/9369[其他原则]
+
+=== 一些软件设计的读物
+*《领域驱动设计》* ，本书是领域驱动设计方面的经典之作。全书围绕着设计和开发实践，结合若干真实的项目案例，向读者阐述如何在真实的软件开发中应用领域驱动设计。书中给出了领域驱动设计的系统化方法，并将人们普遍接受的一些实践综合到一起，融入了作者的见解和经验，展现了一些可扩展的设计新实践、已验证过的技术以及便于应对复杂领域的软件项目开发的基本原则。
+
+*《UNIX 编程艺术*》 ，这本书主要介绍了 Unix 系统领域中的设计和开发哲学、思想文化体系、原则与经验，由公认的 Unix 编程大师、开源运动领袖人物之一埃里克 · 雷蒙德（Eric S. Raymond）倾力多年写作而成。包括 Unix 设计者在内的多位领域专家也为本书贡献了宝贵的内容。本书内容涉及社群文化、软件开发设计与实现，覆盖面广、内容深邃，完全展现了作者极其深厚的经验积累和领域智慧。
+
+*《Clean Architecture》*，如果你读过 *《Clean Code》* 和 *《The Clean Coder》*这两本书。你就能猜得到这种 Clean 系列一定也是出自 “Bob 大叔” 之手。没错，就是 Bob 大叔的心血之作。除了这个网站，《Clean Architecture》也是一本书，这是一本很不错的架构类图书。对软件架构的元素、方法等讲得很清楚。示例都比较简单，并带一些软件变化历史的讲述，很开阔视野。
+
+*https://12factor.net/[The Twelve-Factor App]* ，如今，软件通常会作为一种服务来交付，它们被称为网络应用程序，或软件即服务（SaaS）。12-Factor 为构建 SaaS 应用提供了方法论，这也是架构师必读的文章。（ https://12factor.net/zh_cn/[中译版]） 这篇文章在业内的影响力很大，必读！
+
+*https://medium.com/@rdsubhas/10-modern-software-engineering-mistakes-bc67fbef4fc8[Avoid Over Engineering]* ，有时候，我们会过渡设计我们的系统，过度设计会把我们带到另外一个复杂度上，所以，我们需要一些工程上的平衡。这篇文章是一篇非常不错地告诉你什么是过度设计的文章。
+
+*https://medium.com/@DataStax/instagram-engineerings-3-rules-to-a-scalable-cloud-application-architecture-c44afed31406[Instagram Engineering’s 3 rules to a scalable cloud application architecture]* ，Instagram 工程的三个黄金法则：1）使用稳定可靠的技术（迎接新的技术）；2）不要重新发明轮子；3）Keep it very simple。我觉得这三条很不错。其实，Amazon 也有两条工程法则，一个是自动化，一个是简化。
+
+*https://medium.com/@DataStax/instagram-engineerings-3-rules-to-a-scalable-cloud-application-architecture-c44afed31406[How To Design A Good API and Why it Matters - Joshua Bloch]* ，Google 的一个分享，关于如何设计好一个 API。
+
+关于 Restful API 的设计，你可以学习并借鉴一下下面这些文章:
+
+* https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api[Best Practices for Designing a Pragmatic RESTful API]
+* https://betimdrenica.wordpress.com/2015/03/09/ideal-rest-api-design/[Ideal REST API design]
+* https://github.com/interagent/http-api-design[HTTP API Design Guide]
+* https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md[Microsoft REST API Guidelines]
+* https://github.com/watson-developer-cloud/api-guidelines[IBM Watson REST API Guidelines]
+* https://opensource.zalando.com/restful-api-guidelines/[Zalando RESTful API and Event Scheme Guidelines]
+
+*https://blog.codinghorror.com/the-problem-with-logging/[The Problem With Logging]* ，一篇关于程序打日志的短文，可以让你知道一些可能以往不知道的打日志需要注意的问题。
+
+*http://berb.github.io/diploma-thesis/community/index.html[Concurrent Programming for Scalable Web Architectures]* ，这是一本在线的免费书，教你如何架构一个可扩展的高性能的网站。其中谈到了一些不错的设计方法和知识。

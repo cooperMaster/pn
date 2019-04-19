@@ -1,0 +1,162 @@
+== Linux系统、内存和网络
+=== Linux 系统相关
+* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/?version=7[Red Hat Enterprise Linux 文档] 。Red Hat Enterprise Linux（RHEL）是老牌 Linux 厂商 Red Hat 出品的面向商业的 Linux 发行版。Red Hat 网站上的这个文档中有很多很有价值的内容，值得一看。
+
+* https://github.com/0xAX/linux-insides[Linux Insides] ，GitHub 上的一个开源电子书，其中讲述了 Linux 内核是怎样启动、初始化以及进行管理的。
+
+* http://lwn.net/Kernel/Index/[LWN’s kernel page] ，上面有很多非常不错的文章来解释 Linux 内核的一些东西。
+
+* http://learnlinuxconcepts.blogspot.com/2014/10/this-blog-is-to-help-those-students-and.html[Learn Linux Kernel from Android Perspective] ，从 Android 的角度来学习 Linux 内核，这个站点上的 Blog 相对于前面的比较简单易读一些。
+
+* https://www.kernel.org/doc/[Linux Kernel Doc]， Linux 的内核文档也可以浏览一下。
+
+* http://planet.kernel.org/[Kernel Planet] ，Linux 内核开发者的 Blog，有很多很不错的文章和想法。
+
+* https://lenovopress.com/redp4285.pdf[Linux Performance and Tuning Guidelines] ，这是 IBM 出的红皮书，虽然有点老了，但还是非常值得一读的。
+
+* http://tldp.org/LDP/tlk/tlk.html[TLK: The Linux Kernel] ，这是一本相对比较老的书了，Linux 内核版本为 2.0.33，但了解一下前人的思路，也是很有帮助的。
+
+* http://www.brendangregg.com/linuxperf.html[Linux Performance] ，这个网站上提供了和 Linux 系统性能相关的各种工具和文章收集，非常不错。
+
+* https://blogs.dropbox.com/tech/2017/09/optimizing-web-servers-for-high-throughput-and-low-latency/[Optimizing web servers for high throughput and low latency] ，这是一篇非常底层的系统调优的文章，来自 DropBox，从中你可以学到很多底层的性能调优的经验和知识。
+
+=== 内存相关
+
+计算机内存管理是每一个底层程序员需要了解的非常重要的事儿。当然，这里我们重点还是 Linux 操作系统相关的内存管理上的知识。
+
+首先，LWN.net 上有一系列的 “**What every programmer should know about memory**” 文章你需要读一下。当然，你可以直接访问一个完整的 http://futuretech.blinkenlights.nl/misc/cpumemory.pdf[PDF 文档]。下面是这个系列文章的网页版列表。读完这个列表的内容，你基本上就对内存有了一个比较好的知识体系了。
+
+* https://lwn.net/Articles/250967/[Part 1: Introduction] ，中译版为 “ https://www.oschina.net/translate/what-every-programmer-should-know-about-memory-part1[每个程序员都应该了解的内存知识【第一部分】] ”
+* https://lwn.net/Articles/252125/[Part 2: CPU caches]
+* http://lwn.net/Articles/253361/[Part 3 (Virtual memory)]
+* http://lwn.net/Articles/254445/[Part 4 (NUMA systems)]
+* http://lwn.net/Articles/255364/[Part 5 (What programmers can do - cache optimization)]
+* http://lwn.net/Articles/256433/[Part 6 (What programmers can do - multi-threaded optimizations)]
+* http://lwn.net/Articles/257209/[Part 7 (Memory performance tools)]
+* https://lwn.net/Articles/258154/[Part 8 (Future technologies)]
+* https://lwn.net/Articles/258188/[Part 9 (Appendices and bibliography)]
+
+几篇和内存相关的论文:
+
+* http://irl.cs.ucla.edu/~yingdi/web/paperreading/whymb.2010.06.07c.pdf[Memory Barriers: a Hardware View for Software Hackers]。内存的读写屏障是线程并发访问共享的内存数据时，从程序本身、编译器到 CPU 都必须遵循的一个规范。有了这个规范，才能保证访问共享的内存数据时，一个线程对该数据的更新能被另一个线程以正确的顺序感知到。在 SMP（对称多处理）这种类型的多处理器系统（包括多核系统）上，这种读写屏障还包含了复杂的缓存一致性策略。这篇文章做了详细解释。
+
+* http://www.cl.cam.ac.uk/~pes20/ppc-supplemental/test7.pdf[A Tutorial Introduction to the ARM and POWER Relaxed Memory Models]，对 ARM 和 POWER 的宽松内存模型的一个教程式的简介。本篇文章的焦点是 ARM 和 POWER 体系结构下多处理器系统内存并发访问一致性的设计思路和使用方法。与支持较强的 TSO 模型的 x86 体系结构不同，ARM 和 POWER 这两种体系结构出于对功耗和性能的考虑，使用了一种更为宽松的内存模型。本文详细讨论了 ARM 和 POWER 的模型。
+
+* http://www.cl.cam.ac.uk/~pes20/weakmemory/cacm.pdf[x86-TSO: A Rigorous and Usable Programmer’s Model for x86 Multiprocessors]，介绍 x86 的多处理器内存并发访问的一致性模型 TSO。
+
+接下来是开发者最关心的内存管理方面的 lib 库。通常来说，我们有三种内存分配管理模块。就目前而言，BSD 的 jemalloc 有很大的影响力。后面我们可以看到不同公司的实践性文章。
+
+* http://www.malloc.de/en/[ptmalloc] 是 glibc 的内存分配管理。
+
+* https://github.com/gperftools/gperftools[tcmalloc] 是 Google 的内存分配管理模块，全称是 Thread-Caching malloc，基本上来说比 glibc 的 ptmalloc 快两倍以上。
+
+* http://jemalloc.net/[jemalloc] 是 BSD 提供的内存分配管理。其论文为 https://people.freebsd.org/~jasone/jemalloc/bsdcan2006/jemalloc.pdf[A Scalable Concurrent malloc(3) Implementation for FreeBSD]，这是一个可以并行处理的内存分配管理器。
+
+关于 C 的这些内存分配器，你可以参看 Wikipedia 的 “ https://en.wikipedia.org/wiki/C_dynamic_memory_allocation#Thread-caching_malloc_(tcmalloc)[C Dynamic Memory Allocation]” 这个词条。
+
+下面是几篇不错的文章，让你感觉一下上面那三种内存分配器的一些比较和工程实践。
+
+* http://www.cnhalo.net/2016/06/13/memory-optimize/[内存优化总结：ptmalloc、tcmalloc 和 jemalloc]
+* https://www.facebook.com/notes/facebook-engineering/scalable-memory-allocation-using-jemalloc/480222803919[Scalable memory allocation using jemalloc]
+* https://zapier.com/engineering/celery-python-jemalloc/[Decreasing RAM Usage by 40% Using jemalloc with Python & Celery]
+
+=== 计算机网络
+==== 网络学习
+《计算机网络（第五版）》这本书还与时俱进地引入了最新的网络技术，包括无线网络、3G 蜂窝网络、RFID 与传感器网络、内容分发与 P2P 网络、流媒体传输与 IP 语音，以及延迟容忍网络等。另外，本书针对当前网络应用中日益突出的安全问题，用了一整章的篇幅对计算机网络的安全性进行了深入讨论，而且把相关内容与最新网络技术结合起来阐述。这本书读起来并不枯燥，因为其中有很多小故事和小段子。
+
+然后，有两个网上的教程和讲义也可以让人入门。
+
+*   渥汰华大学的一个课程讲义你也可以一看 http://www.site.uottawa.ca/~shervin/courses/ceg4185/lectures/[Computer Network Design] 。
+*   GeeksforGeeks 上也有一个简单的 https://www.geeksforgeeks.org/computer-network-tutorials/[Computer Network Tutorials] 。
+
+=== 网络调优
+
+接下来，你可能需要一些非常实用的可以操作的技术，下面的几篇文章相信可以帮助到你。
+
+* http://lartc.org/[《Linux 的高级路由和流量控制 HowTo》 -Linux Advanced Routing & Traffic Control HOWTO] ]，这是一个非常容易上手的关于 iproute2、流量整形和一点 netfilter 的指南。
+
+* 关于网络调优，你可以看一下这个文档 https://access.redhat.com/sites/default/files/attachments/20150325_network_performance_tuning.pdf[Red Hat Enterprise Linux Network Performance Tuning Guide]。
+
+* 还有一些网络工具能够帮上你的大忙，这里有一个网络工具的 Awesome 列表 https://github.com/caesar0301/awesome-pcaptools[Awesome Pcap Tools] ，其中罗列了各种网络工具，能够让你更从容地调试网络相关的程序。
+
+* https://netdevconf.org/1.2/papers/bbr-netdev-1.2.new.new.pdf[Making Linux TCP Fast] ，一篇非常不错的 TCP 调优的论文。
+
+* 下面是在 PackageCloud 上的两篇关于 Linux 网络栈相关的底层文章，非常值得一读。
+
+    ** https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/[Monitoring and Tuning the Linux Networking Stack: Receiving Data]
+
+    ** https://blog.packagecloud.io/eng/2017/02/06/monitoring-tuning-linux-networking-stack-sending-data/[Monitoring and Tuning the Linux Networking Stack: Sending Data]
+    
+=== 网络协议
+
+接下来，想要学习网络协议最好的方式就是学习通讯相关的 RFC。所以，在这里我会推荐一系列值得读的 RFC 给你。读 RFC 有几个好处，一方面可以学习技术，另一方面，你可以通过 RFC 学习到一个好的技术文档是怎么写的，还能看到各种解决问题的方案和思路。
+
+对于第 2 层链路层，你可能需要了解一下 ARP：
+
+* https://tools.ietf.org/html/rfc826[RFC 826 - An Ethernet Address Resolution Protocol]
+
+以及 Tunnel 相关的协议：
+
+* https://tools.ietf.org/html/rfc1853[RFC 1853 - IP in IP Tunneling]
+* https://tools.ietf.org/html/rfc2784[RFC 2784 - Generic Routing Encapsulation (GRE)]
+* https://tools.ietf.org/html/rfc2661[RFC 2661 - Layer Two Tunneling Protocol “L2TP”]
+* https://tools.ietf.org/html/rfc2637[RFC 2637 - Point-to-Point Tunneling Protocol (PPTP)]
+
+对于第 4 层，你最需要了解的是 TCP/IP 了。和 TCP 相关的 RFC 相当多，这里给一系列经典的 RFC。这些 RFC 我都引用在了我在 CoolShell 上的 https://coolshell.cn/articles/11564.html)[《TCP 的那些事儿（上）》]和 https://coolshell.cn/articles/11609.html[《TCP 的那些事儿（下）》]两篇文章中。如果你看不懂 RFC，你也可以去看我上述的文章。
+
+* https://tools.ietf.org/html/rfc793[RFC 793 - Transmission Control Protocol] - 最初的 TCP 标准定义，但不包括 TCP 相关细节。
+
+* https://tools.ietf.org/html/rfc813[RFC 813 - Window and Acknowledgement Strategy in TCP] - TCP 窗口与确认策略，并讨论了在使用该机制时可能遇到的问题及解决方法。
+
+* https://tools.ietf.org/html/rfc879[RFC 879 - The TCP Maximum Segment Size and Related Topics] - 讨论 MSS 参数对控制 TCP 分组大小的重要性，以及该参数与 IP 分段大小的关系等。
+
+* https://tools.ietf.org/html/rfc896[RFC 896 - Congestion Control in IP/TCP Internetworks] - 讨论拥塞问题和 TCP 如何控制拥塞。
+
+* https://tools.ietf.org/html/rfc2581[RFC 2581 - TCP Congestion Control] - 描述用于拥塞控制的四种机制：慢启动、拥塞防御、快重传和快恢复。后面这个 RFC 被  https://tools.ietf.org/html/rfc5681[RFC 5681] 所更新。还有  https://tools.ietf.org/html/rfc6582[RFC 6582 - The NewReno Modification to TCP’s Fast Recovery Algorithm] 中一个改进的快速恢复算法。
+
+* https://tools.ietf.org/html/rfc2018[RFC 2018 - TCP Selective Acknowledgment Options] - TCP 的选择确认。
+
+* https://tools.ietf.org/html/rfc2883[RFC 2883 - An Extension to the Selective Acknowledgement (SACK) Option for TCP] - 对于 RFC 2018 的改进。
+
+* https://tools.ietf.org/html/rfc2988[RFC 2988 - Computing TCP’s Retransmission Timer] - 讨论与 TCP 重传计时器设置相关的话题，重传计时器控制报文在重传前应等待多长时间。也就是经典的 TCP Karn/Partridge 重传算法。
+
+* https://tools.ietf.org/html/rfc6298[RFC 6298 - Computing TCP’s Retransmission Timer] - TCP Jacobson/Karels Algorithm 重传算法。
+
+我个人觉得 TCP 最牛的不是不丢包，而是拥塞控制。对此，如果你感兴趣，可以读一下经典论文 http://ee.lbl.gov/papers/congavoid.pdf[《Congestion Avoidance and Control》]。
+
+关于 Linux 下的 TCP 参数，你需要仔仔细细地读一下 http://man7.org/linux/man-pages/man7/tcp.7.html[TCP 的 man page] 。
+
+对于第 7 层协议，HTTP 协议是重点要学习的。
+
+首先推荐的是《HTTP 权威指南 》，这本书有点厚，可以当参考书来看。这本书中没有提到 HTTP/2 的事，但是可以让你了解到 HTTP 协议的绝大多数特性。
+
+HTTP 1.1 的原始 RFC 是 1999 年 6 月的 https://tools.ietf.org/html/rfc2616[RFC 2616]，但其在 2014 后很快被下面这些 RFC 给取代了。
+
+* https://tools.ietf.org/html/rfc7230[RFC 7230 - Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing]
+
+*   [RFC 7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content](https://tools.ietf.org/html/rfc7231)
+
+* https://tools.ietf.org/html/rfc7232[RFC 7232 - Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests]
+
+* https://tools.ietf.org/html/rfc7233[RFC 7233 - Hypertext Transfer Protocol (HTTP/1.1): Range Requests]
+
+* https://tools.ietf.org/html/rfc7234[RFC 7234 - Hypertext Transfer Protocol (HTTP/1.1): Caching]
+
+* https://tools.ietf.org/html/rfc7235[RFC 7235 - Hypertext Transfer Protocol (HTTP/1.1): Authentication]
+
+关于 https://en.wikipedia.org/wiki/HTTP/2[HTTP/2]，这是 HTTP 的一个比较新的协议，它于 2015 年被批准通过，现在基本上所有的主流浏览器都默认启用这个协议。所以，你有必要学习一下这个协议。下面是相关的学习资源。
+
+* https://legacy.gitbook.com/book/ye11ow/http2-explained/details[Gitbook - HTTP/2 详解]
+
+* http://daniel.haxx.se/http2/[http2 explained] (https://www.gitbook.com/book/ye11ow/http2-explained/details[中译版])
+
+* https://cascadingmedia.com/insites/2015/03/http-2.html[HTTP/2 for a Faster Web]
+
+* https://www.nginx.com/wp-content/uploads/2015/09/NGINX_HTTP2_White_Paper_v4.pdf[Nginx HTTP/2 白皮书]
+
+* HTTP/2 的两个 RFC：
+
+    ** https://httpwg.org/specs/rfc7540.html[RFC 7540 - Hypertext Transfer Protocol Version 2 (HTTP/2)] ，HTTP/2 的协议本身
+    ** https://httpwg.org/specs/rfc7541.html[RFC 7541 - HPACK: Header Compression for HTTP/2] ，HTTP/2 的压缩算法
+
+最后，你可以上 Wikipedia 的 https://en.wikipedia.org/wiki/Internet_protocol_suite[Internet Protocol Suite] 上看看，这是一个很不错的网络协议的词条汇集地。顺着这些协议，你可以找到很多有用的东西。
