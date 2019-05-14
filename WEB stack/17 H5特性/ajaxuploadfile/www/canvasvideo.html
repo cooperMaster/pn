@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background: black;  text-align: center}
+        #c1{background: white;}
+    </style>
+    <script>
+        window.onload = function () {
+            let can = document.getElementById('c1');
+            let gd = can.getContext('2d');//绘图接口
+            let v1 = document.getElementById('v1');
+            let btn = document.getElementById('btn');
+
+            btn.onclick = () => {
+                gd.drawImage(v1,0,0);
+            };
+
+        }
+    </script>
+</head>
+<body>
+    <input type="button" id="btn" value="DRAW"><br>
+    <canvas id="c1" height="480" width="852"></canvas>
+    <video id="v1" src="../data/Solution.mp4" controls height="480" width="852"></video>
+</body>
+</html>

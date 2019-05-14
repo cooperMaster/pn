@@ -61,3 +61,6 @@ moveTo
 lineTo
 beginPath --- 清楚之前的路径
 closePath --- 闭合路径
+
+canvas图像上传给服务器
+    can.toDataURL() --- base64

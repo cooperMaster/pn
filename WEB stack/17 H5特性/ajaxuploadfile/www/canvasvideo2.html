@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{background: black;  text-align: center}
+        #c1{background: white;}
+    </style>
+    <script>
+        window.onload = function () {
+            let can = document.getElementById('c1');
+            let gd = can.getContext('2d');//绘图接口
+            let v1 = document.getElementById('v1');
+            let btn = document.getElementById('btn');
+            let btn2 = document.getElementById('btn2');
+
+            //效率不好，时间间隔不好确认
+            // setInterval(() => {
+            //     gd.drawImage(v1,0,0);
+            // },16)
+
+
+            function next (){
+                requestAnimationFrame(() => {
+                    gd.drawImage(v1,0,0);
+
+                    next();
+                });
+            }
+
+            next();
+
+            btn.onclick = () => {
+               v1.play();
+            };
+
+            btn2.onclick = () => {
+                v1.pause();
+            };
+        }
+    </script>
+</head>
+<body>
+    <input type="button" id="btn" value="播放">
+    <input type="button" id="btn2" value="暂停"><br>
+    <canvas id="c1" height="480" width="852"></canvas>
+    <video id="v1" src="../data/Solution.mp4" controls height="480" width="852" style="display: none"></video>
+</body>
+</html>

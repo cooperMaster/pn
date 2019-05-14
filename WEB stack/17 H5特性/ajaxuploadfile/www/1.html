@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {width: 400px;height: 20px;background: #CCC}
+        .child {height: 100%;background: green; width:0;}
+    </style>
+    <script>
+        window.onload = () => {
+            let btn = document.getElementById('btn');
+            let file1 = document.getElementById('file1');
+
+            btn.onclick = () => {
+                let oAjax = new XMLHttpRequest();
+
+
+
+                //ajax2.0支持跨域，在seerver.js中设置允许
+                oAjax.open('POST','http://localhost:8000/upload',true);
+
+                oAjax.upload.onerror = () => {
+                    alert('上传失败');
+                };
+                oAjax.upload.onload = () => {
+                    alert('上传完成');
+                };
+                oAjax.upload.onprogress = (env) => {
+                    console.log(env);
+                    let p = (100*env.loaded/env.total).toFixed(2)+'%';
+                    let oChild = document.querySelector('.child');
+
+                    oChild.style.width = p;
+                };
+
+                //表单
+                let formData = new FormData();
+                // formData.set('f1',file1.files[0]);
+                // oAjax.send(formData);
+
+                //file中设置multiple
+                //file1.files   ArrayLike
+                let files = Array.from(file1.files);
+                files.forEach(item => {
+                    formData.append('f1',item);
+                });
+                oAjax.send(formData);
+
+                oAjax.onreadystatechange= ()=>{
+                    if (oAjax.readyState == 4) {
+                        alert(oAjax.status);
+                    }
+                };
+            };
+        };
+
+    </script>
+</head>
+<body>
+    <div class="box"><div class="child"></div></div>
+    <input type="file" id="file1" multiple/><input type="button" value="上传" id="btn"/>
+</body>
+</html>

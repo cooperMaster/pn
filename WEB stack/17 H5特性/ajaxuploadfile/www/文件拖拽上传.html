@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{width: 400px; height: 200px; background: #ccc;border: 1px; solid-color: black; margin: 50px; text-align: center; line-height: 200px;}
+        .box {width: 400px;height: 20px;background: #CCC}
+        .child {height: 100%;background: green; width:0;}
+    </style>
+    <script>
+        window.onload = function(){
+            let div1 = document.getElementById('div1');
+            //ondragenter 进入
+            //ondragleave 离开
+            //ondragover 悬停--只要没走就一直发生
+            //ondrop     松开鼠标--如果ondragover不阻止默认事件，drop不会发生
+            div1.addEventListener('dragenter',function () {
+            div1.innerHTML = '释放鼠标';
+            },false);
+
+            div1.addEventListener('dragleave',function () {
+                div1.innerHTML = '将文件拖拽至此区域';
+            },false);
+
+            //只要没离开，一直发生
+            div1.addEventListener('dragover',function (env) {
+               console.log('dragover');
+
+               env.preventDefault();
+            },false);
+
+            div1.addEventListener('drop',function (env) {
+                console.log(env.dataTransfer.files);
+                console.log('drop');
+
+                env.preventDefault();
+
+                let files = Array.from(env.dataTransfer.files);
+                let formData = new FormData();
+                files.forEach(file => {
+                    formData.append('f', file);
+                });
+
+                let xhr = new XMLHttpRequest();
+
+
+                xhr.upload.onerror = () => {alert('文件上传失败')};
+                xhr.upload.onload = () => {alert('文件上传成功')};
+                xhr.upload.onprogress = (env) => {
+                    let p = (100*env.loaded/env.total).toFixed(2)+'%';
+                    let oChild = document.querySelector('.child');
+
+                    oChild.style.width = p;
+                };
+
+                xhr.open('POST', '/upload', true);
+
+
+
+                xhr.send(formData);
+
+                xhr.onreadystatechange= () => {
+                    if (xhr.readyState == 4) {
+                        alert(xhr.status);
+                    }
+                };
+
+
+            },false);
+
+        };
+    </script>
+</head>
+<body>
+<div class="box"><div class="child"></div></div>
+    <div id="div1">
+        将文件拖拽至此区域
+    </div>
+</body>
+</html>
