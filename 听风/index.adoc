@@ -1,0 +1,9 @@
+
+include::programmerleveling-正式入门.adoc[]
+include::programmerleveling-程序员修养.adoc[]
+include::programmerleveling-编程语言.adoc[]
+include::programmerleveling-理论学科.adoc[]
+include::programmerleveling-系统知识.adoc[]
+include::programmerleveling-软件设计.adoc[]
+include::programmerleveling-Linux.adoc[]
+include::programmerleveling-异步IO模型和Lock-Free编程.adoc[]
