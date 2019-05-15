@@ -69,13 +69,13 @@ public class FlowDemo2 {
 	public static void main(String[] args) throws Exception {
 		// 1. 定义发布者, 发布的数据类型是 Integer
 		// 直接使用jdk自带的SubmissionPublisher
-		SubmissionPublisher<Integer> publiser = new SubmissionPublisher<Integer>();
+		SubmissionPublisher<Integer> publisher = new SubmissionPublisher<Integer>();
 
 		// 2. 定义处理器, 对数据进行过滤, 并转换为String类型
 		MyProcessor processor = new MyProcessor();
 
 		// 3. 发布者 和 处理器 建立订阅关系
-		publiser.subscribe(processor);
+		publisher.subscribe(processor);
 
 		// 4. 定义最终订阅者, 消费 String 类型数据
 		Subscriber<String> subscriber = new Subscriber<String>() {
@@ -125,12 +125,12 @@ public class FlowDemo2 {
 
 		// 6. 生产数据, 并发布
 		// 这里忽略数据生产过程
-		publiser.submit(-111);
-		publiser.submit(111);
+		publisher.submit(-111);
+		publisher.submit(111);
 
 		// 7. 结束后 关闭发布者
 		// 正式环境 应该放 finally 或者使用 try-resouce 确保关闭
-		publiser.close();
+		publisher.close();
 
 		// 主线程延迟停止, 否则数据没有消费就退出
 		Thread.currentThread().join(1000);
