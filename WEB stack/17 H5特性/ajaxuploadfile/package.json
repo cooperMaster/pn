@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "",
+  "version": "",
+  "dependencies": {
+    "express": "^4.16.4",
+    "multer": "^1.4.1"
+  }
+}
