@@ -1,9 +1,5 @@
 package com.ming;
 
-import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
-
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -12,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Servlet implementation class AsyncServlet
@@ -36,10 +35,10 @@ public class AsyncServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		long t1 = System.currentTimeMillis();
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ì²½
+		// ¿ªÆôÒì²½
 		AsyncContext asyncContext = request.startAsync();
 
-		// Ö´ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½
+		// Ö´ÐÐÒµÎñ´úÂë
 		CompletableFuture.runAsync(() -> doSomeThing(asyncContext,
 				asyncContext.getRequest(), asyncContext.getResponse()));
 
@@ -49,7 +48,7 @@ public class AsyncServlet extends HttpServlet {
 	private void doSomeThing(AsyncContext asyncContext,
 			ServletRequest servletRequest, ServletResponse servletResponse) {
 
-		// Ä£ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+		// Ä£ÄâºÄÊ±²Ù×÷
 		try {
 			TimeUnit.SECONDS.sleep(5);
 		} catch (InterruptedException e) {
@@ -62,7 +61,7 @@ public class AsyncServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		// Òµï¿½ï¿½ï¿½ï¿½ë´¦ï¿½ï¿½ï¿½ï¿½ï¿½, Í¨Öªï¿½ï¿½ï¿½ï¿½
+		// ÒµÎñ´úÂë´¦ÀíÍê±Ï, Í¨Öª½áÊø
 		asyncContext.complete();
 	}
 
