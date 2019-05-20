@@ -100,4 +100,170 @@ MySQL 有两个比较有名的分支，一个是 Percona，另一个是 MariaDB�
 
 * https://medium.com/airbnb-engineering/how-we-partitioned-airbnb-s-main-database-in-two-weeks-55f7e006ff21[Airbnb: How We Partitioned Airbnb’s Main Database in Two Weeks]
 
+===  NoSQL 数据库
+关于 NoSQL 数据库，其最初目的就是解决大数据的问题
+
+* Martin Fowler 在 YouTube 上分享的 NoSQL 介绍 https://youtu.be/qI_g07C_Q5I[Introduction To NoSQL]， 以及他参与编写的 https://book.douban.com/subject/25662138/[NoSQL Distilled - NoSQL 精粹]，这本书才 100 多页，是本难得的关于 NoSQL 的书，很不错，非常易读。
+
+* https://medium.com/baqend-blog/nosql-databases-a-survey-and-decision-guidance-ea7823a822d#.nhzop4d23[NoSQL Databases: a Survey and Decision Guidance]，这篇文章可以带你自上而下地从 CAP 原理到开始了解 NoSQL 的种种技术，是一篇非常不错的文章。
+
+* https://resources.sei.cmu.edu/asset_files/WhitePaper/2014_019_001_90915.pdf[Distribution, Data, Deployment: Software Architecture Convergence in Big Data Systems]，这是卡内基 · 梅隆大学的一篇讲分布式大数据系统的论文。其中主要讨论了在大数据时代下的软件工程中的一些关键点，也说到了 NoSQL 数据库。
+
+* http://ianvarley.com/UT/MR/Varley_MastersReport_Full_2009-08-07.pdf[No Relation: The Mixed Blessings of Non-Relational Databases]，这篇论文虽然有点年代久远。但这篇论文是 HBase 的基础，你花上一点时间来读读，就可以了解到，对各种非关系型数据存储优缺点的一个很好的比较。
+
+* https://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/[NoSQL Data Modeling Techniques] ，NoSQL 建模技术。这篇文章我曾经翻译在了 CoolShell 上，标题为 https://coolshell.cn/articles/7270.htm[NoSQL 数据建模技术]，供你参考。
+
+* https://docs.mongodb.com/manual/core/data-modeling-introduction/[MongoDB - Data Modeling Introduction] ，虽然这是 MongoDB 的数据建模介绍，但是其很多观点可以用于其它的 NoSQL 数据库。
+
+* https://firebase.google.com/docs/database/android/structure-data[Firebase - Structure Your Database] ，Google 的 Firebase 数据库使用 JSON 建模的一些最佳实践。
+
+* 因为 CAP 原理，所以当你需要选择一个 NoSQL 数据库的时候，你应该看看这篇文档 http://blog.nahurst.com/visual-guide-to-nosql-systems[Visual Guide to NoSQL Systems]。
+
+选 SQL 还是 NoSQL，这里有两篇文章，值得你看看
+
+* https://www.upwork.com/hiring/data/sql-vs-nosql-databases-whats-the-difference/[SQL vs. NoSQL Databases: What’s the Difference?]
+
+* https://engineering.salesforce.com/sql-or-nosql-9eaf1d92545b[Salesforce: SQL or NoSQL]
+
+
+=== 各种 NoSQL 数据库
+
+学习使用 NoSQL 数据库其实并不是一件很难的事，只要你把官方的文档仔细地读一下，是很容易上手的，而且大多数 NoSQL 数据库都是开源的，所以，也可以通过代码自己解决问题。下面我主要给出一些典型的 NoSQL 数据库的一些经验型的文章，供你参考。
+
+**列数据库 Column Database**
+
+* Cassandra 相关
+
+    ** 沃尔玛实验室有两篇文章值得一读。
+
+        *** (https://medium.com/walmartlabs/avoid-pitfalls-in-scaling-your-cassandra-cluster-lessons-and-remedies-a71ca01f8c04)
+        *** https://medium.com/walmartlabs/building-object-store-storing-images-in-cassandra-walmart-scale-a6b9c02af593[Storing Images in Cassandra at Walmart]
+    ** https://engineeringblog.yelp.com/2016/08/how-we-scaled-our-ad-analytics-with-cassandra.html[Yelp: How We Scaled Our Ad Analytics with Apache Cassandra] ，Yelp 的这篇博客也有一些相关的经验和教训。
+
+    ** https://blog.discordapp.com/how-discord-stores-billions-of-messages-7fa6ec7ee4c7[Discord: How Discord Stores Billions of Messages] ，Discord 公司分享的一个如何存储十亿级消息的技术文章。
+
+    ** https://www.slideshare.net/DataStax/cassandra-at-instagram-2016[Cassandra at Instagram] ，Instagram 的一个 PPT，其中介绍了 Instagram 中是怎么使用 Cassandra 的。
+
+    ** https://medium.com/netflix-techblog/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e[Netflix: Benchmarking Cassandra Scalability on AWS - Over a million writes per second] ，Netflix 公司在 AWS 上给 Cassandra 做的一个 Benchmark。
+
+* HBase 相关
+
+    ** https://medium.com/imgur-engineering/imgur-notifications-from-mysql-to-hbase-9dba6fc44183[Imgur Notification: From MySQL to HBASE]
+
+    ** https://medium.com/@Pinterest_Engineering/improving-hbase-backup-efficiency-at-pinterest-86159da4b954[Pinterest: Improving HBase Backup Efficiency]
+
+    ** https://www.ibm.com/support/knowledgecenter/en/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_TuneHbase.html[IBM : Tuning HBase performance]
+
+    ** http://www.larsgeorge.com/2010/05/hbase-file-locality-in-hdfs.html[HBase File Locality in HDFS]
+
+    ** http://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf[Apache Hadoop Goes Realtime at Facebook]
+
+    ** http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.294.8459&rep=rep1&type=pdf[Storage Infrastructure Behind Facebook Messages: Using HBase at Scale]
+
+    ** https://github.com/rayokota/awesome-hbase[GitHub: Awesome HBase]
+
+针对于 HBase 有两本书你可以考虑一下。
+
+*   首先，先推荐两本书，一本是偏实践的 https://book.douban.com/subject/25706541/[《HBase 实战》]，另一本是偏大而全的手册型的 https://book.douban.com/subject/10748460/[《HBase 权威指南》]。
+
+* 当然，你也可以看看官方的 http://hbase.apache.org/0.94/book/book.html[The Apache HBase™ Reference Guide]
+
+* 另外两个列数据库：
+
+    ** https://clickhouse.yandex/[ClickHouse - Open Source Distributed Column Database at Yandex]
+
+    ** https://engineering.giphy.com/scaling-redshift-without-scaling-costs/[Scaling Redshift without Scaling Costs at GIPHY]
+
+**文档数据库 Document Database - MongoDB, SimpleDB, CouchDB**
+
+* https://msdn.microsoft.com/en-us/magazine/hh547103.aspx[Data Points - What the Heck Are Document Databases?]
+
+* https://www.mongodb.com/blog/post/ebay-building-mission-critical-multi-data-center-applications-with-mongodb[eBay: Building Mission-Critical Multi-Data Center Applications with MongoDB]
+
+* https://medium.baqend.com/parse-is-gone-a-few-secrets-about-their-infrastructure-91b3ab2fcf71[The AWS and MongoDB Infrastructure of Parse: Lessons Learned]
+
+* https://medium.com/build-addepar/migrating-mountains-of-mongo-data-63e530539952[Migrating Mountains of Mongo Data]
+
+* https://engineering.linkedin.com/blog/2017/12/couchbase-ecosystem-at-linkedin[Couchbase Ecosystem at LinkedIn]
+
+* https://medium.com/zendesk-engineering/resurrecting-amazon-simpledb-9404034ec506[SimpleDB at Zendesk]
+
+* https://github.com/ramnes/awesome-mongodb[Github: Awesome MongoDB]
+
+**数据结构数据库 Data structure Database - Redis**
+
+* http://tech.trivago.com/2017/01/25/learn-redis-the-hard-way-in-production/[Learn Redis the hard way (in production) at Trivago]
+
+* http://highscalability.com/blog/2014/9/8/how-twitter-uses-redis-to-scale-105tb-ram-39mm-qps-10000-ins.html[Twitter: How Twitter Uses Redis To Scale - 105TB RAM, 39MM QPS, 10,000+ Instances]
+
+* https://slack.engineering/scaling-slacks-job-queue-687222e9d100[Slack: Scaling Slack’s Job Queue - Robustly Handling Billions of Tasks in Milliseconds Using Kafka and Redis]
+
+* https://githubengineering.com/moving-persistent-data-out-of-redis/[GitHub: Moving persistent data out of Redis at GitHub]
+
+* https://engineering.instagram.com/storing-hundreds-of-millions-of-simple-key-value-pairs-in-redis-1091ae80f74c[Instagram: Storing Hundreds of Millions of Simple Key-Value Pairs in Redis]
+
+* https://www.infoq.com/presentations/twitch-pokemon[Redis in Chat Architecture of Twitch (from 27:22)]
+
+* https://deliveroo.engineering/2016/10/07/optimising-session-key-storage.html[Deliveroo: Optimizing Session Key Storage in Redis]
+
+* https://deliveroo.engineering/2017/01/19/optimising-membership-queries.html[Deliveroo: Optimizing Redis Storage]
+
+* https://github.com/JamzyWang/awesome-redis[GitHub: Awesome Redis]
+
+**时序数据库 Time-Series Database**
+
+* https://blog.timescale.com/what-the-heck-is-time-series-data-and-why-do-i-need-a-time-series-database-dcf3b1b18563[What is Time-Series Data & Why We Need a Time-Series Database]
+
+* https://blog.timescale.com/time-series-data-why-and-how-to-use-a-relational-database-instead-of-nosql-d0cd6975e87c[Time Series Data: Why and How to Use a Relational Database instead of NoSQL]
+
+* https://code.facebook.com/posts/952820474848503/beringei-a-high-performance-time-series-storage-engine/[Beringei: High-performance Time Series Storage Engine @Facebook]
+
+* https://medium.com/netflix-techblog/introducing-atlas-netflixs-primary-telemetry-platform-bd31f4d8ed9a[Introducing Atlas: Netflix’s Primary Telemetry Platform @Netflix]
+
+* https://blog.timescale.com/when-boring-is-awesome-building-a-scalable-time-series-database-on-postgresql-2900ea453ee2[Building a Scalable Time Series Database on PostgreSQL]
+
+* https://medium.com/netflix-techblog/scaling-time-series-data-storage-part-i-ec2b6d44ba39[Scaling Time Series Data Storage - Part I @Netflix]
+
+* https://medium.com/@leventov/design-of-a-cost-efficient-time-series-store-for-big-data-88c5dc41af8e[Design of a Cost Efficient Time Series Store for Big Data]
+
+* https://github.com/xephonhq/awesome-time-series-database[GitHub: Awesome Time-Series Database]
+
+**图数据库 - Graph Platform**
+
+*   首先是 IBM Devloperworks 上的两个简介性的 PPT。
+
+    ** https://www.ibm.com/developerworks/library/cl-graph-database-1/cl-graph-database-1-pdf.pdf[Intro to graph databases, Part 1, Graph databases and the CRUD operations]
+
+    ** https://www.ibm.com/developerworks/library/cl-graph-database-2/cl-graph-database-2-pdf.pdf[Intro to graph databases, Part 2, Building a recommendation engine with a graph database]
+
+* 然后是一本免费的电子书 http://graphdatabases.com[《Graph Database》]。
+
+*   接下来是一些图数据库的介绍文章。
+
+    ** https://www.infoq.com/presentations/graph-database-scalability[Handling Billions of Edges in a Graph Database]
+
+    ** https://neo4j.com/customers/[Neo4j case studies with Walmart, eBay, AirBnB, NASA, etc]
+
+    ** https://blog.twitter.com/engineering/en_us/a/2010/introducing-flockdb.html[FlockDB: Distributed Graph Database for Storing Adjacency Lists at Twitter]
+
+    ** https://architecht.io/google-ibm-back-new-open-source-graph-database-project-janusgraph-1d74fb78db6b[JanusGraph: Scalable Graph Database backed by Google, IBM and Hortonworks]
+
+    * https://aws.amazon.com/neptune/[Amazon Neptune]
+
+**搜索数据库 - ElasticSearch**
+
+* https://www.elastic.co/guide/en/elasticsearch/guide/master/index.html[Elasticsearch: The Definitive Guide] 这是官网方的 ElasticSearch 的学习资料，基本上来说，看这个就够了。
+
+* 接下来是 4 篇和性能调优相关的工程实践。
+
+    ** https://www.ebayinc.com/stories/blogs/tech/elasticsearch-performance-tuning-practice-at-ebay/[Elasticsearch Performance Tuning Practice at eBay]
+
+    ** https://kickstarter.engineering/elasticsearch-at-kickstarter-db3c487887fc[Elasticsearch at Kickstarter]
+
+    ** https://www.loggly.com/blog/nine-tips-configuring-elasticsearch-for-high-performance/[9 tips on ElasticSearch configuration for high performance]
+
+    ** https://medium.com/@abhidrona/elasticsearch-deployment-best-practices-d6c1323b25d7[Elasticsearch In Production - Deployment Best Practices]
+
+* 最后是 GitHub 上的资源列表 https://github.com/dzharii/awesome-elasticsearch[GitHub: Awesome ElasticSearch]。
+
 
