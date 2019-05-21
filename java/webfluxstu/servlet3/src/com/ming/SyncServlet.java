@@ -1,25 +1,24 @@
 package com.ming;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Servlet implementation class SSE
+ * Servlet implementation class SyncServlet
  */
-@WebServlet("/SSE")
-public class SSE extends HttpServlet {
+@WebServlet("/SyncServlet")
+public class SyncServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public SSE() {
+	public SyncServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -30,22 +29,25 @@ public class SSE extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/event-stream");
-		response.setCharacterEncoding("utf-8");
+		long t1 = System.currentTimeMillis();
 
-		for (int i = 0; i < 5; i++) {
-			// Ö¸ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ê¶
-			response.getWriter().write("event:me\n");
-			// ï¿½ï¿½Ê½: data: + ï¿½ï¿½ï¿½ï¿½ + 2ï¿½ï¿½ï¿½Ø³ï¿½
-			response.getWriter().write("data:" + i + "\n\n");
-			response.getWriter().flush();
+		// Ö´ÐÐÒµÎñ´úÂë
+		doSomeThing(request, response);
 
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-			}
+		System.out.println("sync use:" + (System.currentTimeMillis() - t1));
+	}
+
+	private void doSomeThing(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		// Ä£ÄâºÄÊ±²Ù×÷
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
 		}
 
+		//
+		response.getWriter().append("done");
 	}
 
 	/**
