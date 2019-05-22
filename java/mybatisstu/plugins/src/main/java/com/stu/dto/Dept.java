@@ -4,7 +4,7 @@ public class Dept {
     private int deptNo;
     private String deptName;
     private String location;
-    private boolean flag;
+    private String country;
 
     public int getDeptNo() {
         return deptNo;
@@ -30,11 +30,11 @@ public class Dept {
         this.location = location;
     }
 
-    public boolean isFlag() {
-        return flag;
+    public String getCountry() {
+        return country;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

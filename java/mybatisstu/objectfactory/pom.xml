@@ -9,11 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>typehandler</artifactId>
+    <artifactId>objectfactory</artifactId>
+
     <description>
-        03 type handler
-        java类型boolean 与 数据库类型int的转换
+        04 object factory
+        通过设定Dept.country的默认值来了解DefaultObjectFactory的使用
     </description>
+
     <build>
         <resources>
             <resource>

@@ -11,12 +11,24 @@ import java.sql.SQLException;
 public class MyTypeHandler implements TypeHandler {
     @Override
     public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
-        
+        if (parameter == null){
+            ps.setInt(i,0);
+            return;
+        }
+        boolean flag = (boolean) parameter;
+        if (flag) {
+            ps.setInt(i,1);
+        }else{
+            ps.setInt(i,0);
+        }
+
     }
 
     @Override
     public Object getResult(ResultSet rs, String columnName) throws SQLException {
-        return null;
+        int val = rs.getInt(columnName);
+        boolean flag = val == 1 ? true : false;
+        return flag;
     }
 
     @Override

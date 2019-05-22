@@ -12,6 +12,8 @@
         <module>simple</module>
         <module>coreprops</module>
         <module>typehandler</module>
+        <module>objectfactory</module>
+        <module>plugins</module>
     </modules>
 
     <dependencies>
