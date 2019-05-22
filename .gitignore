@@ -2,6 +2,6 @@
 __pycache__
 *.pyc
 */node_modules/
-*/target
-./java/**/target
+**/target
+
 
