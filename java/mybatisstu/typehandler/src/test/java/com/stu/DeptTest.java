@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class DeptTest {
 
@@ -20,7 +21,11 @@ public class DeptTest {
     public void start(){
         try{
             InputStream inputStream = Resources.getResourceAsStream("MyBatis-config.xml");
-            SqlSessionFactory factory=new SqlSessionFactoryBuilder().build(inputStream);
+            InputStream inputStream2 = Resources.getResourceAsStream("config2.properties");
+            Properties properties = new Properties();
+            properties.load(inputStream2);
+//            SqlSessionFactory factory=new SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory factory=new SqlSessionFactoryBuilder().build(inputStream,properties);
             session=factory.openSession();
         }catch(Exception exception){
             exception.printStackTrace();
@@ -41,7 +46,7 @@ public class DeptTest {
     public void test02(){
         DeptDao dao=session.getMapper(DeptDao.class);
         Dept dept=dao.deptFindById(1);
-        System.out.println();
+        System.out.println(dept);
     }
 
     @Test

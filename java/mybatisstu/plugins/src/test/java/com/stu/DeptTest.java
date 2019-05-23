@@ -21,11 +21,11 @@ public class DeptTest {
     public void start(){
         try{
             InputStream inputStream = Resources.getResourceAsStream("MyBatis-config.xml");
-            InputStream inputStream2= Resources.getResourceAsStream("config.properties");
+            InputStream inputStream2= Resources.getResourceAsStream("config2.properties");
             Properties properties = new Properties();
             properties.load(inputStream2);
             //SqlSessionFactory factory=new SqlSessionFactoryBuilder().build(inputStream, null, properties);
-            SqlSessionFactory factory=new SqlSessionFactoryBuilder().build(inputStream, "development");
+            SqlSessionFactory factory=new SqlSessionFactoryBuilder().build(inputStream, "development",properties);
             session=factory.openSession();
         }catch(Exception exception){
             exception.printStackTrace();

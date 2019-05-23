@@ -33,19 +33,19 @@ public class Invocation implements InvocationHandler {
         //1.确认当前被拦截行为
         String methodName= method.getName();
         //2.根据被拦截行为不同，决定主要业务和次要业务如何绑定执行
-        if("eat".equals(methodName)){//饭前要洗手
-            wash();                            //洗手
-            value=method.invoke(this.obj, params);   //吃饭
+        if("eat".equals(methodName)){
+            pray();
+            value=method.invoke(this.obj, params);
         }else{//便后要洗手
             value=method.invoke(this.obj, params);
-            wash();
+            pray();
         }
         return value; //返回被拦截方法，需要调用地方
     }
 
     //次要业务
-    public void wash(){
-        System.out.println("-----祈祷----");
+    public void pray(){
+        System.out.println("-----pray----");
     }
 
 }

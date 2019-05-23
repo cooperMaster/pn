@@ -37,4 +37,14 @@ public class Dept {
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "Dept{" +
+                "deptNo=" + deptNo +
+                ", deptName='" + deptName + '\'' +
+                ", location='" + location + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }
