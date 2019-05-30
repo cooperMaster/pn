@@ -1,5 +1,6 @@
 package com.stu.util;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,19 @@ public class BeanFactory {
             Class classFile = Class.forName(beanDefined.getClassPath());
 
             if ("prototype".equals(beanDefined.getScope())) {
-                instance = classFile.newInstance();
+
+                String factoryBean = beanDefined.getFactory_bean();
+                String factoryMethod = beanDefined.getfactory_method();
+                if (factoryBean != null
+                        && factoryMethod != null) {
+
+                    Class factoryClass = map.get(factoryBean).getClass();
+                    Method method = factoryClass.getDeclaredMethod(factoryMethod);
+                    method.setAccessible(true);
+                    instance = method.invoke(factoryClass);
+                }else {
+                    instance = classFile.newInstance();
+                }
             }else if ("singleton".equals(beanDefined.getScope())) {
                 instance = map.get(beanId);
             }

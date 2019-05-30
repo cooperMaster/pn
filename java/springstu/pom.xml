@@ -10,9 +10,35 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>myspringbean</module>
+        <module>springbean</module>
     </modules>
 
     <dependencies>
+
+        <!-- Spring5.0 核心工具包 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+        <!-- Spring5.0 Bean管理工具包 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+        <!-- Spring5.0 context管理工具包 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
