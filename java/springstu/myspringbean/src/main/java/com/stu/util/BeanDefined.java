@@ -1,11 +1,14 @@
 package com.stu.util;
 
+import java.util.Map;
+
 public class BeanDefined {
     private String beanId;
     private String classPath;
     private String scope="singleton";
     private String factory_bean;
     private String factory_method;
+    private Map property;
 
     public String getBeanId() {
         return beanId;
@@ -39,11 +42,19 @@ public class BeanDefined {
         this.factory_bean = factory_bean;
     }
 
-    public String getfactory_method() {
+    public String getFactory_method() {
         return factory_method;
     }
 
-    public void setfactory_method(String factory_method) {
+    public void setFactory_method(String factory_method) {
         this.factory_method = factory_method;
+    }
+
+    public Map getProperty() {
+        return property;
+    }
+
+    public void setProperty(Map property) {
+        this.property = property;
     }
 }

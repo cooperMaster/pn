@@ -21,4 +21,16 @@
     <bean id="t1"  factory-bean="factory" factory-method="createTeacher" />
     <bean id="t2" class="com.stu.util.TeacherFactory"   factory-method="createTeacherStatic" />
 
+    <!-- 注册bean:被监控实现类 -->
+    <bean id="baseService" class="com.stu.service.impl.BaseServiceImpl" />
+    <!-- 注册代理实现类 -->
+    <bean class="com.stu.util.MyBeanPostProcessor" />
+
+    <bean id="teacher2" class="com.stu.dto.Teacher" scope="prototype">
+        <property name="name" value="Miss xiao"></property>
+        <property name="age" value="26"></property>
+        <property name="friends" value="M,D,Z"></property>
+        <property name="school" value="清华，中大"></property>
+    </bean>
+
 </beans>

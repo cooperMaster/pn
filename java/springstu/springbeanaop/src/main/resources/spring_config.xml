@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 注册被监控实现类 -->
+    <bean id="baseService" class="com.stu.service.impl.BaseServiceImpl" />
+
+    <!-- 注册通知实现类 -->
+    <bean id="serviceBeforeAdvice" class="com.stu.advice.ServiceBeforeAdvice" />
+
+    <!-- 注册代理监控对象生产工厂 -->
+    <bean id="proxyFactoryBean" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="baseService"></property>
+        <!--<property name="targetName" value="baseService"/>-->
+        <property name="interceptorNames" >
+            <array>
+                <value>serviceBeforeAdvice</value>
+            </array>
+        </property>
+    </bean>
+
+
+
+    <!-- advisor -->
+    <!-- 注册类型过滤器 -->
+    <bean id="classFilter" class="com.stu.util.MyClassFilter"></bean>
+    <!-- 注册方法匹配器 -->
+    <bean id="methodMatcher" class="com.stu.util.MyMethodMatcher"></bean>
+
+    <!-- 注册切入点 -->
+    <bean id="pointCut" class="com.stu.util.MyPointCut" >
+        <property name="classFilter" ref="classFilter"></property>
+        <property name="methodMatcher" ref="methodMatcher"></property>
+    </bean>
+
+    <!-- 注册顾问 -->
+    <bean id="myAdvisor" class="com.stu.util.MyPointCutAdvisor">
+        <property name="advice" ref="serviceBeforeAdvice"></property>
+        <property name="pointcut" ref="pointCut"></property>
+    </bean>
+
+    <bean id="proxyFactoryBean2" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="baseService"></property>
+        <property name="interceptorNames" value="myAdvisor"></property>
+    </bean>
+</beans>

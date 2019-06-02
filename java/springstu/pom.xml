@@ -11,6 +11,7 @@
     <modules>
         <module>myspringbean</module>
         <module>springbean</module>
+        <module>springbeanaop</module>
     </modules>
 
     <dependencies>

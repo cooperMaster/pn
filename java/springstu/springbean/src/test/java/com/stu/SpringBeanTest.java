@@ -1,6 +1,7 @@
 package com.stu;
 
 import com.stu.dto.Teacher;
+import com.stu.service.BaseService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -34,4 +35,16 @@ public class SpringBeanTest {
         System.out.println(teacher);
     }
 
+    @Test
+    public void testBaseService(){
+        BaseService baseService = (BaseService) ac.getBean("baseService");
+        System.out.println(baseService.sayHello());//HELLO!
+
+    }
+
+    @Test
+    public void testDI(){
+        Teacher teacher = (Teacher) ac.getBean("teacher2");
+        System.out.println(teacher);
+    }
 }
