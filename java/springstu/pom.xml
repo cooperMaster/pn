@@ -12,6 +12,7 @@
         <module>myspringbean</module>
         <module>springbean</module>
         <module>springbeanaop</module>
+        <module>springbeanaspect</module>
     </modules>
 
     <dependencies>

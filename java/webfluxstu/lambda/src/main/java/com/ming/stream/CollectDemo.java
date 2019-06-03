@@ -74,7 +74,6 @@ class Student {
     private Grade grade;
 
     public Student(String name, int age, Gender gender, Grade grade) {
-        super();
         this.name = name;
         this.age = age;
         this.gender = gender;

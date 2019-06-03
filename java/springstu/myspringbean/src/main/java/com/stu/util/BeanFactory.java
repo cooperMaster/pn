@@ -80,6 +80,7 @@ public class BeanFactory {
 
     private void setValue(Object instance, Class classFile, Map property) throws Exception {
         Method[] methodArr = classFile.getDeclaredMethods();
+        if(property==null){return;}
         Iterator iterator = property.keySet().iterator();
         while (iterator.hasNext()) {
             String filedName = (String) iterator.next();
