@@ -13,6 +13,7 @@
         <module>springbean</module>
         <module>springbeanaop</module>
         <module>springbeanaspect</module>
+        <module>springbeanTM</module>
     </modules>
 
     <dependencies>
@@ -38,6 +39,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
+            <version>5.1.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
             <version>5.1.7.RELEASE</version>
         </dependency>
 
