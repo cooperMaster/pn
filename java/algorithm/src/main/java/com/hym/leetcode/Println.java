@@ -1,3 +1,5 @@
+package com.hym.leetcode;
+
 import java.util.Arrays;
 
 public class Println {

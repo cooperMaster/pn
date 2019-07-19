@@ -1,5 +1,5 @@
-import java.util.Map;
-import java.util.HashMap;
+package com.hym.leetcode;
+
 /*
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 
