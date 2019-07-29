@@ -11,7 +11,14 @@ public class SelectionSort {
      * 选择最小的元素in arr[2...4]放到arr[2]  11 12 22 25 64
      * 选择最小的元素in arr[3...4]放到arr[3]  11 12 22 25 64
      *
+     *Time Complexity: O(n2) as there are two nested loops.
      *
+     * Auxiliary Space: O(1)
+     * The good thing about selection sort is it never makes more than O(n) swaps and can be useful when memory write is a costly operation.
+     *
+     * Stability : The default implementation is not stable. However it can be made stable. Please see stable selection sort for details.
+     *
+     * In Place : Yes, it does not require extra space.
      */
 
 
