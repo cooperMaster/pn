@@ -14,6 +14,7 @@
         <module>springbeanaop</module>
         <module>springbeanaspect</module>
         <module>springbeanTM</module>
+        <module>spingina4</module>
     </modules>
 
     <dependencies>
