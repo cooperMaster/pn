@@ -703,5 +703,44 @@ image:images/gitnotes/basic-rebase-4.png[]
 
 *SSH里面列举的方法，思路很重要，一个简单的git服务器搭建，用到了Linux知识，融会贯通。*
 
+==== 生成 SSH 公钥
+默认情况下，用户的 SSH 密钥存储在其 ~/.ssh 目录下。 进入该目录并列出其中内容，你便可以快速确认自己是否已拥有密钥：
+    
+    $ cd ~/.ssh
+    $ ls
+    authorized_keys2  id_dsa       known_hosts
+    config            id_dsa.pub
+
+找一对以 id_dsa 或 id_rsa 命名的文件，其中一个带有 .pub 扩展名。 .pub 文件是你的公钥，另一个则是与之对应的私钥。如果找不到这样的文件（或者根本没有 .ssh 目录），你可以通过运行 ssh-keygen 程序来创建它们。 
+    
+    $ ssh-keygen -o
+
+进行了上述操作的用户需要将各自的公钥发送给任意一个 Git 服务器管理员 （假设服务器正在使用基于公钥的 SSH 验证设置）。
+
+    $ cd ~/.ssh
+    $ ls
+    authorized_keys2  id_dsa       known_hosts
+    config            id_dsa.pub
+
+    checking-for-existing-ssh-keys:
+        $ ls -al ~/.ssh # windows下在git bash中查看
+        # Lists the files in your .ssh directory, if they exist
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
