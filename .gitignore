@@ -3,7 +3,12 @@ __pycache__
 *.pyc
 */node_modules/
 **/target
+<<<<<<< HEAD
 **/.idea
 **/*.iml
 
+=======
+**/*.iml
+**/.idea
+>>>>>>> 9ac5901f9711996dfbdc3ccfa3141eb887fc95b1
 

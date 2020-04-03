@@ -1,0 +1,54 @@
+show-busy-java-threads 可以用来定位问题
+1 RegexLoad.java
+2 SimpleDeadLock.java
+可用上面两个实例验证，只支持Linux
+
+show-busy-java-threads.sh
+# 从 所有的 Java进程中找出最消耗CPU的线程（缺省5个），打印出其线程栈。
+
+show-busy-java-threads.sh -c <要显示的线程栈数>
+
+show-busy-java-threads.sh -c <要显示的线程栈数> -p <指定的Java Process>
+# -F选项：执行jstack命令时加上-F选项（强制jstack），一般情况不需要使用
+show-busy-java-threads.sh -p <指定的Java Process> -F
+
+show-busy-java-threads.sh -s <指定jstack命令的全路径>
+# 对于sudo方式的运行，JAVA_HOME环境变量不能传递给root，
+# 而root用户往往没有配置JAVA_HOME且不方便配置，
+# 显式指定jstack命令的路径就反而显得更方便了
+
+show-busy-java-threads.sh -a <输出记录到的文件>
+
+show-busy-java-threads.sh -t <重复执行的次数> -i <重复执行的间隔秒数>
+# 缺省执行一次；执行间隔缺省是3秒
+
+##############################
+# 注意：
+##############################
+# 如果Java进程的用户 与 执行脚本的当前用户 不同，则jstack不了这个Java进程。
+# 为了能切换到Java进程的用户，需要加sudo来执行，即可以解决：
+sudo show-busy-java-threads.sh
+
+================================================================================================
+
+找出有重复类的Jar
+show-duplicate-java-classes
+
+# 查找当前目录下所有Jar中的重复类
+show-duplicate-java-classes
+
+# 查找多个指定目录下所有Jar中的重复类
+show-duplicate-java-classes path/to/lib_dir1 /path/to/lib_dir2
+
+# 查找多个指定Class目录下的重复类。Class目录 通过 -c 选项指定
+show-duplicate-java-classes -c path/to/class_dir1 -c /path/to/class_dir2
+
+# 查找指定Class目录和指定目录下所有Jar中的重复类的Jar
+show-duplicate-java-classes path/to/lib_dir1 /path/to/lib_dir2 -c path/to/class_dir1 -c path/to/class_dir2
+
+================================================================================================
+
+
+以上第一个文件已经改成unix模式，可以通过vi file 在命令模式下输入:set ff 查看，:set ff=unix 改成UNIX,:wq 保存 
+
+##https://github.com/oldratlee/useful-scripts
