@@ -3,5 +3,7 @@ __pycache__
 *.pyc
 */node_modules/
 **/target
+**/.idea
+**/*.iml
 
 

@@ -2,6 +2,9 @@ package com.hym.datastruct;
 
 /**
  * https://www.geeksforgeeks.org/linked-list-set-1-introduction/
+ * https://www.geeksforgeeks.org/linked-list-set-2-inserting-a-node/
+ * https://www.geeksforgeeks.org/linked-list-set-3-deleting-node/
+ *
  */
 public class LinkedList {
 
@@ -77,6 +80,14 @@ public class LinkedList {
         //Add a node at the end
         ll.append(node0, 4);
         ll.printList(node0);
+        System.out.println("==================");
+        //Given a key, deletes the first occurrence of key in linked list
+        ll.deleteNode(node0,23);
+        ll.deleteNode(node0,4);
+        ll.deleteNode(node0,5);
+        ll.deleteNode(node0,0);
+        ll.printList(node0);
+
     }
 
     private Node push(int data) {
@@ -118,6 +129,30 @@ public class LinkedList {
         }
         curr.next = endNode;
         endNode.next = null;
+    }
+
+    private void deleteNode(Node head, int key) {
+        if (head == null) {return;}
+        Node curr = head;
+        if (head.next == null && head.data == key) {
+            head = null;
+            return;
+        }
+        if (head.next != null && head.data == key) {
+            head = head.next;
+            return;
+        }
+
+        while (curr.next != null) {
+            Node prevNode = curr;
+            curr = curr.next;
+            if (curr.data == key) {
+                prevNode.next = curr.next;
+                curr.next = null;
+                return;
+            }
+        }
+
     }
 
     private void printList(Node n){
