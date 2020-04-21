@@ -1,0 +1,28 @@
+:imagesdir: images\nginx实践
+
+===== Nginx特性
+====== 1、IO多路复用epoll
+
+    什么是IO多路复用？
+    多个描述符的I/O操作都能在一个线程内并发交替地顺序完成，这叫I/O多路复用，这里的复用是指复用同一个线程。
+    IO多路复用的实现方式select、poll、epoll
+
+====== 2、轻量级
+* 功能模块少
+* 代码模块化
+
+====== 3、CPU亲和(affinity)
+把CPU核心和Nginx工作进程绑定方式，把每个worker进程固定在一个CPU上执行，减少切换CPU的cache miss，获得更好的性能。
+
+image::affinity.png[CPU亲和]
+
+====== 4、sendfile
+
+image::traditional_send_file.PNG[传统型的文件传输]
+
+nginx基于内核态的文件传输sendfile--零拷贝
+
+image::nginx-send_file.PNG[]
+
+==== Nginx的安装
+Linux下的 http://nginx.org/en/linux_packages.html[联网安装]
