@@ -45,6 +45,6 @@ public class CountExample2 {
 
     private static void add() {
         count.incrementAndGet();
-        // count.getAndIncrement();
+//        count.getAndIncrement();
     }
 }
