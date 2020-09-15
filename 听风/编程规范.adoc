@@ -176,34 +176,3 @@
 
 *   [RegexHQ](https://github.com/regexhq)。
 *   [Learn regex the easy way](https://github.com/zeeshanu/learn-regex)。
-
-下面是《程序员练级攻略（2018）》系列文章的目录。
-
-*   [开篇词](https://time.geekbang.org/column/article/8136)
-*   入门篇
-    *   [零基础启蒙](https://time.geekbang.org/column/article/8216)
-    *   [正式入门](https://time.geekbang.org/column/article/8217)
-*   修养篇
-    *   [程序员修养](https://time.geekbang.org/column/article/8700)
-*   专业基础篇
-    *   [编程语言](https://time.geekbang.org/column/article/8701)
-    *   [理论学科](https://time.geekbang.org/column/article/8887)
-    *   [系统知识](https://time.geekbang.org/column/article/8888)
-*   软件设计篇
-    *   [软件设计](https://time.geekbang.org/column/article/9369)
-*   高手成长篇
-    *   [Linux 系统、内存和网络（系统底层知识）](https://time.geekbang.org/column/article/9759)
-    *   [异步 I/O 模型和 Lock-Free 编程（系统底层知识）](https://time.geekbang.org/column/article/9851)
-    *   [Java 底层知识](https://time.geekbang.org/column/article/10216)
-    *   [数据库](https://time.geekbang.org/column/article/10301)
-    *   [分布式架构入门（分布式架构）](https://time.geekbang.org/column/article/10603)
-    *   [分布式架构经典图书和论文（分布式架构）](https://time.geekbang.org/column/article/10604)
-    *   [分布式架构工程设计 (分布式架构)](https://time.geekbang.org/column/article/11232)
-    *   [微服务](https://time.geekbang.org/column/article/11116)
-    *   [容器化和自动化运维](https://time.geekbang.org/column/article/11665)
-    *   [机器学习和人工智能](https://time.geekbang.org/column/article/11669)
-    *   [前端基础和底层原理（前端方向）](https://time.geekbang.org/column/article/12271)
-    *   [前端性能优化和框架（前端方向）](https://time.geekbang.org/column/article/12389)
-    *   [UI/UX 设计（前端方向）](https://time.geekbang.org/column/article/12486)
-    *   [技术资源集散地](https://time.geekbang.org/column/article/12561)
-    
