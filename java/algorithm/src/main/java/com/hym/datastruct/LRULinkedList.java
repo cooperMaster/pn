@@ -1,8 +1,9 @@
-package com.hym.algorithm;
+package com.hym.datastruct;
 
 /**
  * 缓存LRU（Least Recently Used）
  * 基于单链表
+ * 基于哨兵节点，有头链表
  */
 public class LRULinkedList<T> {
     //链表长度
@@ -29,7 +30,7 @@ public class LRULinkedList<T> {
             return;
         }
 
-        Node node = findPreNode(data);
+        Node node = findDataReturnPreNode(data);
         //data 节点存在，删除data节点，再将其放到头节点
         if (node != null) {
             //删除data 节点
@@ -41,14 +42,31 @@ public class LRULinkedList<T> {
             //满了，则删掉尾节点，再插入到头节点
             //未满，则直接插入头节点
             if (length == capacity){
-
+                delTaiNode();
             }
             insertTopNode(data);
 
         }
     }
+
+    private void delTaiNode() {
+        Node cur = headNode;
+        //空链表
+        if (cur.getNext() == null) {
+            return;
+        }
+        while (cur.getNext().getNext() != null) {
+            cur = cur.getNext();
+        }
+
+        Node temp = cur.getNext();
+        cur.setNext(null);
+        temp = null;
+        length--;
+    }
+
     //找到是否存在data的节点，若有，则返回前级节点
-    private Node findPreNode(T data) {
+    private Node findDataReturnPreNode(T data) {
         Node cur = headNode;
         Node pre = null;
         while (cur.getNext() != null) {
@@ -122,7 +140,7 @@ public class LRULinkedList<T> {
     }
 
     public static void main(String[] args){
-        LRULinkedList<String> list = new LRULinkedList();
+        LRULinkedList<String> list = new LRULinkedList(3);
         list.add("a");
         list.add("b");
         list.add("c");
@@ -130,6 +148,8 @@ public class LRULinkedList<T> {
         list.printAll();
         list.add("a");
         System.out.println(list.length);
+        list.printAll();
+        list.add("d");
         list.printAll();
     }
 
