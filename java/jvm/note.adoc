@@ -1,0 +1,29 @@
+$ echo '
+public class Foo {
+ public static void main(String[] args) {
+  boolean flag = true;
+  if (flag) System.out.println("Hello, Java!");
+  if (flag == true) System.out.println("Hello, JVM!");
+ }
+}' > Foo.java
+$ javac Foo.java
+$ java Foo
+$ java -cp /path/to/asmtools.jar org.openjdk.asmtools.jdis.Main Foo.class > Foo.jasm.1
+$ awk 'NR==1,/iconst_1/{sub(/iconst_1/, "iconst_2")} 1' Foo.jasm.1 > Foo.jasm
+$ java -cp /path/to/asmtools.jar org.openjdk.asmtools.jasm.Main Foo.jasm
+$ java Foo
+
+===
+
+javac Eatting.java
+java Eatting -- 吃了 真吃了
+java -cp /path/to/asmtools.jar org.openjdk.asmtools.jdis.Main Eatting.class > Eatting.jasm.1
+awk 'NR==1,/iconst_1/{sub(/iconst_1/, "iconst_2")} 1' Eatting.jasm.1 > Eatting.jasm
+java Eatting -- 吃了
+'''
+if (吃过饭没) System.out.println("吃了");
+if (true == 吃过饭没) System.out.println("真吃了");
+'''
+变量存储的true或false，编译后，字节码存的是0或1。当改把值从1改成2后，第一个if判断为真，第二个if比较判断为假
+
+
