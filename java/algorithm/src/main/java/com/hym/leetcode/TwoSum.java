@@ -13,6 +13,9 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TwoSum{
 
     //my solution
@@ -28,36 +31,38 @@ public class TwoSum{
         return new int[]{};
     }
 
-//    public int[] twoSum(int[] nums, int target) {
-//        Map<Integer,Integer> map = new HashMap();
-//        for(int i = 0 ;i < nums.length; i++){
-//            map.put(nums[i], i);
-//        }
-//
-//        for(int i = 0 ;i < nums.length; i++){
-//            if(map.containsKey(target-nums[i])){
-//                return new int[]{i,map.get(target-nums[i])};
-//            }
-//        }
-//
-//        throw new IllegalArgumentException("No two sum solution.");
-//    }
+    public int[] twoSum2(int[] nums, int target) {
+        Map<Integer,Integer> map = new HashMap();
+        for(int i = 0 ;i < nums.length; i++){
+            map.put(nums[i], i);
+        }
 
-//    public int[] twoSum(int[] nums, int target) {
-//        Map<Integer, Integer> map = new HashMap<>();
-//        for (int i = 0; i < nums.length; i++) {
-//            int complement = target - nums[i];
-//            if (map.containsKey(complement)) {
-//                return new int[] { map.get(complement), i };
-//            }
-//            map.put(nums[i], i);
-//        }
-//        throw new IllegalArgumentException("No two sum solution");
-//    }
+        for(int i = 0 ;i < nums.length; i++){
+            if(map.containsKey(target-nums[i])){
+                return new int[]{i,map.get(target-nums[i])};
+            }
+        }
+
+        throw new IllegalArgumentException("No two sum solution.");
+    }
+
+    public int[] twoSum3(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[] { map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No two sum solution");
+    }
 
     public static void main(String[] args){
         TwoSum ts = new TwoSum();
         int[] nums = {2,3,7,8};
         Println.out(ts.twoSum(nums, 9));
+        Println.out(ts.twoSum2(nums, 9));
+        Println.out(ts.twoSum3(nums, 9));
     }
 }
